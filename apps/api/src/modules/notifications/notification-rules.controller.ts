@@ -283,7 +283,7 @@ export class NotificationRulesController {
 
     // Look up Adv Part Numbers from MPN cache
     const mpns = affectedParts.map((p: any) => p.mpn).filter(Boolean);
-    let mpnToAdvPart: Map<string, string> = new Map();
+    const mpnToAdvPart: Map<string, string> = new Map();
     if (mpns.length > 0) {
       try {
         const mpnCache = new MpnCacheService();
