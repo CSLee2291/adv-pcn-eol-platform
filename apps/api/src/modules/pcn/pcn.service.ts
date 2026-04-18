@@ -290,9 +290,9 @@ export class PcnService {
    * Handles distributor MPN lists (WPI, Arrow, Avnet, etc.)
    * Returns structured text with headers and rows for AI analysis.
    */
-  private async extractExcelText(content: Buffer, filename: string): Promise<string | null> {
+  private async extractExcelText(content: Buffer | ArrayBuffer, filename: string): Promise<string | null> {
     const wb = new ExcelJS.Workbook();
-    await wb.xlsx.load(content);
+    await wb.xlsx.load(content as any);
 
     const sections: string[] = [`[Excel Attachment: ${filename}]`];
 

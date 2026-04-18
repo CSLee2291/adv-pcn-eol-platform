@@ -192,7 +192,7 @@ export function PCNDetail() {
   const [whereUsed, setWhereUsed] = useState<WhereUsedRecord[]>([]);
   const [whereUsedLoading, setWhereUsedLoading] = useState(false);
   const [whereUsedQueried, setWhereUsedQueried] = useState(false);
-  const [wuProgress, setWuProgress] = useState<{ step: string; current: number; total: number; cached?: number; queried?: number } | null>(null);
+  const [wuProgress, setWuProgress] = useState<{ step: string; current: number; total: number; cached?: number; queried?: number; itemNumber?: string } | null>(null);
   const [wuCacheStats, setWuCacheStats] = useState<{ from_cache: number; from_denodo: number; cached_at?: string } | null>(null);
 
   // Refresh state
@@ -1357,7 +1357,7 @@ export function PCNDetail() {
                   >
                     <RefreshCw className="h-3.5 w-3.5" /> Refresh from Denodo
                   </Button>
-                  <Button variant="outline" onClick={handleExportExcel} disabled={exporting}>
+                  <Button variant="outline" onClick={() => handleExportExcel()} disabled={exporting}>
                     {exporting ? (
                       <><Loader2 className="h-4 w-4 animate-spin" /> Exporting...</>
                     ) : (

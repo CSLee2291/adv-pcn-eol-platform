@@ -442,8 +442,8 @@ export class VerificationService {
           excelFolder: rec.excelFolder,
           excelMpnCount: rec.excelMpnCount,
           excelItemCount: rec.excelItemCount,
-          excelMpns: rec.excelMpns,
-          excelItems: rec.excelItems,
+          excelMpns: rec.excelMpns as any,
+          excelItems: rec.excelItems as any,
           // Only carry over appEventId if previous run was PASS (correct event matched)
           appEventId: rec.status === "PASS" ? rec.appEventId : null,
           status: emailFile ? "EMAIL_READY" : "PENDING",

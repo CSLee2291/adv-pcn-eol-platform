@@ -43,7 +43,7 @@ async function start() {
   await app.register(verificationRoutes, { prefix: "/api/v1/verification" });
 
   // Global error handler
-  app.setErrorHandler((error, _request, reply) => {
+  app.setErrorHandler((error: any, _request, reply) => {
     app.log.error(error);
     reply.status(error.statusCode ?? 500).send({
       success: false,

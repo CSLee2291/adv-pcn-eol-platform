@@ -315,7 +315,7 @@ export class NotificationRulesController {
       summaryZh,
       changeDescriptionZh,
       riskLevel: ai.riskLevel,
-      riskReason: ai.riskReason,
+      riskReason: ai.riskReason ?? "",
       formChanged: ai.formChanged,
       fitChanged: ai.fitChanged,
       functionChanged: ai.functionChanged,

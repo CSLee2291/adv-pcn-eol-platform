@@ -143,13 +143,13 @@ export interface WhereUsedRecord {
   Product_Name: string;
   Product_Part_Cat: string;
   Product_LifeCycle: string;
-  "Model Name": string;
+  "Model Name": string | null;
   Request_for_Plant: string;
-  Product_Line: string;
-  PG: string;
-  PD: string;
-  Product_Owner: string;
-  EMAIL: string;
+  Product_Line: string | null;
+  PG: string | null;
+  PD: string | null;
+  Product_Owner: string | null;
+  EMAIL: string | null;
 }
 
 /** Filtering constants — aligned with actual Denodo data values */

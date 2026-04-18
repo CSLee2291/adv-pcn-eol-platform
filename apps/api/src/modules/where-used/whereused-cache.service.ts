@@ -47,7 +47,7 @@ export class WhereUsedCacheService {
         const age = now.getTime() - cached.queriedAt.getTime();
         if (age <= CACHE_TTL_MS) {
           // Cache hit
-          const records = cached.rawData as WhereUsedRecord[];
+          const records = cached.rawData as unknown as WhereUsedRecord[];
           cachedRecords.push(...records);
           fromCache++;
           if (!oldestCacheTime || cached.queriedAt < oldestCacheTime) {
