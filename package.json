@@ -1,0 +1,22 @@
+{
+  "name": "pcn-eol-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PCN/EOL Automation Platform - Advantech",
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "db:migrate": "pnpm --filter api db:migrate",
+    "db:seed": "pnpm --filter api db:seed",
+    "db:studio": "pnpm --filter api db:studio",
+    "test:fixtures": "pnpm --filter api test:fixtures",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.0"
+  }
+}

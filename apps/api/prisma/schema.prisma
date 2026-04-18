@@ -1,0 +1,447 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== PCN 事件主檔 =====
+// 對應 Excel "2026" Sheet 欄位（19 欄完整覆蓋）
+model PcnEventMaster {
+  id                 String      @id @default(uuid())
+  // --- 基本資訊（Excel 欄 1-6） ---
+  notificationSource String      @map("notification_source")
+  receivedDate       DateTime    @map("received_date")
+  vendorName         String      @map("vendor_name")
+  distributorName    String?     @map("distributor_name")
+  pcnNumber          String      @unique @map("pcn_number")
+  pcnTitle           String      @map("pcn_title")
+  pcnType            PcnType     @map("pcn_type")
+  effectiveDate      DateTime?   @map("effective_date")
+  // --- Email / 文件來源 ---
+  sourceEmail        String?     @map("source_email")
+  pdfFilePath        String?     @map("pdf_file_path")
+  rawText            String?     @map("raw_text")
+  // --- CE 處理追蹤（Excel 欄 9-12） ---
+  ceOwnerName        String?     @map("ce_owner_name")
+  ceNotifiedDate     DateTime?   @map("ce_notified_date")
+  ceReplyDate        DateTime?   @map("ce_reply_date")
+  ceComment          String?     @map("ce_comment")
+  // --- PM 通知 & 完成追蹤（Excel 欄 13-15） ---
+  pmNotified         Boolean     @default(false) @map("pm_notified")
+  completionDate     DateTime?   @map("completion_date")
+  followUpNotes      String?     @map("follow_up_notes")
+  // --- IQC 分類 & 備註（Excel 欄 16-17） ---
+  changeTypeForIqc   String?     @map("change_type_for_iqc")
+  additionalNotes    String?     @map("additional_notes")
+  // --- SharePoint 存檔（Excel 欄 18-19） ---
+  sharePointFolder   String?     @map("sharepoint_folder")
+  sharePointUrl      String?     @map("sharepoint_url")
+  // --- 使用者補充 MPN ---
+  userAddedMpns      Json?       @map("user_added_mpns")  // string[] — CE 手動新增的受影響 MPN
+  // --- 系統欄位 ---
+  status             EventStatus @default(PENDING)
+  createdAt          DateTime    @default(now()) @map("created_at")
+  updatedAt          DateTime    @updatedAt @map("updated_at")
+
+  aiAnalysis         AiAnalysisResult?
+  ceAssessments      CeAssessment[]
+  notificationQueue  NotificationQueueEntry[]
+
+  @@map("pcn_event_master")
+}
+
+enum PcnType {
+  PCN
+  EOL
+  PDN
+  OTHER
+}
+
+enum EventStatus {
+  PENDING_REVIEW
+  PENDING
+  AI_ANALYZED
+  CE_REVIEWED
+  WHERE_USED_DONE
+  NOTIFIED
+  CLOSED
+}
+
+// ===== AI 分析結果 =====
+model AiAnalysisResult {
+  id                String   @id @default(uuid())
+  pcnEventId        String   @unique @map("pcn_event_id")
+  summary           String
+  changeDescription String   @map("change_description")
+  formChanged       Boolean  @default(false) @map("form_changed")
+  fitChanged        Boolean  @default(false) @map("fit_changed")
+  functionChanged   Boolean  @default(false) @map("function_changed")
+  riskLevel         RiskLevel @map("risk_level")
+  riskReason        String?  @map("risk_reason")
+  affectedParts     Json?    @map("affected_parts")
+  aiModelVersion    String   @map("ai_model_version")
+  confidence        Float    @default(0)
+  rawAiResponse     Json?    @map("raw_ai_response")
+  analyzedAt        DateTime @default(now()) @map("analyzed_at")
+
+  pcnEvent PcnEventMaster @relation(fields: [pcnEventId], references: [id])
+
+  @@map("ai_analysis_result")
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+// ===== CE 評估紀錄 =====
+model CeAssessment {
+  id                 String     @id @default(uuid())
+  pcnEventId         String     @map("pcn_event_id")
+  assessorId         String     @map("assessor_id")
+  assessorName       String     @map("assessor_name")
+  ceDecision         CeDecision @map("ce_decision")
+  comments           String?
+  overrideRiskLevel  RiskLevel? @map("override_risk_level")
+  needRdVerification Boolean    @default(false) @map("need_rd_verification")
+  assessedAt         DateTime   @default(now()) @map("assessed_at")
+
+  pcnEvent         PcnEventMaster  @relation(fields: [pcnEventId], references: [id])
+  whereUsedResults WhereUsedResult[]
+  cases            PcnCaseMaster[]
+
+  @@map("ce_assessment")
+}
+
+enum CeDecision {
+  ACCEPT
+  REJECT
+  NEED_EVALUATION
+  LAST_TIME_BUY
+}
+
+// ===== Where-used 結果（整合 Denodo 4 APIs 資料） =====
+model WhereUsedResult {
+  id               String   @id @default(uuid())
+  ceAssessmentId   String   @map("ce_assessment_id")
+  mpn              String
+  // --- API-1: MPN Search Result ---
+  itemNumber       String   @map("item_number")
+  mfrName          String?  @map("mfr_name")
+  mfrPartLifecycle String?  @map("mfr_part_lifecycle")
+  preferredStatus  String?  @map("preferred_status")
+  // --- API-2: AllParts Info ---
+  itemDesc         String?  @map("item_desc")
+  partCat          String?  @map("part_cat")
+  lifecyclePhase   String?  @map("lifecycle_phase")
+  phaseOutDate     String?  @map("phase_out_date")
+  ltbDate          String?  @map("ltb_date")
+  estimatedEolDate String?  @map("estimated_eol_date")
+  replacedBy       String?  @map("replaced_by")
+  keyComponent     String?  @map("key_component")
+  isMainstream     String?  @map("is_mainstream")
+  inactive         String?  @map("inactive")
+  // --- API-3: Where-used BOM ---
+  bomLevel         String?  @map("bom_level")
+  componentId      String?  @map("component_id")
+  semiProductId    String?  @map("semi_product_id")
+  qty              Float?
+  pcbMatnr         String?  @map("pcb_matnr")
+  modelName        String?  @map("model_name")
+  productLine      String?  @map("product_line")
+  productGroup     String?  @map("product_group")
+  productDivision  String?  @map("product_division")
+  productOwner     String?  @map("product_owner")
+  productOwnerEmail String? @map("product_owner_email")
+  requestForPlant  String?  @map("request_for_plant")
+  productPartCat   String?  @map("product_part_cat")
+  productLifecycle String?  @map("product_lifecycle")
+  // --- API-4: CE Owner Mapping ---
+  ceOwnerName      String?  @map("ce_owner_name")
+  ceOwnerEmail     String?  @map("ce_owner_email")
+  materialCatId    String?  @map("material_cat_id")
+  subCatId         String?  @map("sub_cat_id")
+  partCategory     String?  @map("part_category_api4")
+  // --- Meta ---
+  rawDenodoData    Json?    @map("raw_denodo_data")
+  querySource      String   @default("DENODO_REST") @map("query_source")
+  queriedAt        DateTime @default(now()) @map("queried_at")
+
+  ceAssessment CeAssessment @relation(fields: [ceAssessmentId], references: [id])
+
+  @@map("whereused_result")
+}
+
+// ===== PCN Case 主檔（per customer） =====
+model PcnCaseMaster {
+  id             String     @id @default(uuid())
+  ceAssessmentId String     @map("ce_assessment_id")
+  customerId     String     @map("customer_id")
+  caseNumber     String     @unique @map("case_number")
+  caseStatus     CaseStatus @default(OPEN) @map("case_status")
+  decision       String?
+  closedAt       DateTime?  @map("closed_at")
+  createdAt      DateTime   @default(now()) @map("created_at")
+  updatedAt      DateTime   @updatedAt @map("updated_at")
+
+  ceAssessment  CeAssessment     @relation(fields: [ceAssessmentId], references: [id])
+  customer      CustomerMaster   @relation(fields: [customerId], references: [id])
+  notifications NotificationLog[]
+
+  @@map("pcn_case_master")
+}
+
+enum CaseStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_RD
+  WAITING_CUSTOMER
+  CLOSED
+}
+
+// ===== MPN 搜尋快取 =====
+// 快取 Denodo API-1 MPN 搜尋結果，避免重複查詢
+model MpnCacheEntry {
+  id                    String   @id @default(uuid())
+  searchMpn             String   @map("search_mpn")          // 搜尋用的 MPN
+  found                 Boolean  @default(false)              // Denodo 是否有結果
+  itemNumber            String   @default("NOT_FOUND") @map("item_number") // Advantech 料號 or "NOT_FOUND"
+  manufactureName       String?  @map("manufacture_name")
+  mfrPartNumber         String?  @map("mfr_part_number")      // Denodo 回傳的實際 MPN
+  mfrPartLifecyclePhase String?  @map("mfr_part_lifecycle_phase")
+  preferredStatus       String?  @map("preferred_status")
+  rawData               Json?    @map("raw_data")             // 完整 Denodo record
+  queriedAt             DateTime @default(now()) @map("queried_at")
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
+
+  @@unique([searchMpn, itemNumber], name: "mpn_item_unique")
+  @@index([searchMpn])
+  @@map("mpn_cache_entry")
+}
+
+// ===== Where-Used BOM 查詢快取 =====
+// 快取 Denodo API-3 Where-Used 查詢結果（含 API-2 enrichment），24 小時 TTL
+model WhereUsedCache {
+  id          String   @id @default(uuid())
+  itemNumber  String   @unique @map("item_number")   // 查詢的 Advantech 料號
+  resultCount Int      @map("result_count")           // 結果筆數
+  rawData     Json     @map("raw_data")               // 完整 where_used 陣列 (enriched)
+  queriedAt   DateTime @default(now()) @map("queried_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([itemNumber])
+  @@map("where_used_cache")
+}
+
+// ===== 客戶主檔 =====
+model CustomerMaster {
+  id                  String  @id @default(uuid())
+  customerCode        String  @unique @map("customer_code")
+  customerName        String  @map("customer_name")
+  notificationRuleSet String  @default("") @map("notification_rule_set")
+  contactEmail        String? @map("contact_email")
+  contactName         String? @map("contact_name")
+  isActive            Boolean @default(true) @map("is_active")
+
+  cases         PcnCaseMaster[]
+  customerRules CustomerRule[]
+  productRules  ProductRule[]
+
+  @@map("customer_master")
+}
+
+// ===== 通知規則定義 =====
+model NotificationRule {
+  id              String   @id @default(uuid())
+  name            String   @unique
+  description     String?
+  ruleType        NotificationRuleType @map("rule_type")
+  conditions      Json     @default("{}")      // JSON: minRiskLevel, pcnTypes, requireFormChange, etc.
+  requireCeReview Boolean  @default(true) @map("require_ce_review")
+  isSystem        Boolean  @default(false) @map("is_system")  // System rules can't be deleted
+  isActive        Boolean  @default(true) @map("is_active")
+  priority        Int      @default(0)         // Lower = higher priority
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  customerRules      CustomerRule[]
+  productRules       ProductRule[]
+  notificationQueue  NotificationQueueEntry[]
+
+  @@map("notification_rule")
+}
+
+enum NotificationRuleType {
+  RISK_THRESHOLD
+  EOL_ALERT
+  FFF_CHANGE
+  ALWAYS
+  CUSTOM
+}
+
+// ===== 客戶 ↔ 規則對應 =====
+model CustomerRule {
+  id         String  @id @default(uuid())
+  customerId String  @map("customer_id")
+  ruleId     String  @map("rule_id")
+  isActive   Boolean @default(true) @map("is_active")
+
+  customer CustomerMaster   @relation(fields: [customerId], references: [id])
+  rule     NotificationRule @relation(fields: [ruleId], references: [id])
+
+  @@unique([customerId, ruleId])
+  @@map("customer_rule")
+}
+
+// ===== 追蹤產品（本地存放的 M/P 產品） =====
+model TrackedProduct {
+  id               String  @id @default(uuid())
+  itemNumber       String  @unique @map("item_number")
+  productName      String  @map("product_name")
+  productLifecycle String  @default("M/P") @map("product_lifecycle")
+  productLine      String? @map("product_line")
+  productOwner     String? @map("product_owner")
+  productOwnerEmail String? @map("product_owner_email")
+  source           String  @default("MANUAL") // MANUAL | DENODO
+  isActive         Boolean @default(true) @map("is_active")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  productRules ProductRule[]
+
+  @@map("tracked_product")
+}
+
+// ===== 產品 ↔ 規則對應 =====
+model ProductRule {
+  id         String  @id @default(uuid())
+  productId  String  @map("product_id")
+  ruleId     String  @map("rule_id")
+  customerId String? @map("customer_id")   // null = global rule, non-null = customer-specific
+  isActive   Boolean @default(true) @map("is_active")
+
+  product  TrackedProduct   @relation(fields: [productId], references: [id])
+  rule     NotificationRule @relation(fields: [ruleId], references: [id])
+  customer CustomerMaster?  @relation(fields: [customerId], references: [id])
+
+  @@unique([productId, ruleId, customerId])
+  @@map("product_rule")
+}
+
+// ===== 通知佇列 =====
+model NotificationQueueEntry {
+  id              String              @id @default(uuid())
+  pcnEventId      String              @map("pcn_event_id")
+  customerId      String?             @map("customer_id")
+  productId       String?             @map("product_id")
+  triggeredRuleId String              @map("triggered_rule_id")
+  triggerSource   String              @map("trigger_source")   // CUSTOMER_RULE | PRODUCT_RULE
+  status          NotificationStatus  @default(PENDING_CE_REVIEW)
+  ceReviewedBy    String?             @map("ce_reviewed_by")
+  ceReviewedAt    DateTime?           @map("ce_reviewed_at")
+  triggeredAt     DateTime            @default(now()) @map("triggered_at")
+  sentAt          DateTime?           @map("sent_at")
+
+  pcnEvent      PcnEventMaster   @relation(fields: [pcnEventId], references: [id])
+  triggeredRule NotificationRule @relation(fields: [triggeredRuleId], references: [id])
+
+  @@map("notification_queue")
+}
+
+enum NotificationStatus {
+  PENDING_CE_REVIEW
+  PENDING_SEND
+  SENT
+  SKIPPED
+}
+
+// ===== 通知紀錄（送出後的審計記錄） =====
+model NotificationLog {
+  id               String    @id @default(uuid())
+  caseId           String    @map("case_id")
+  notificationType String    @map("notification_type")
+  recipientEmail   String    @map("recipient_email")
+  subject          String
+  body             String?
+  sentAt           DateTime? @map("sent_at")
+  deliveryStatus   String    @default("PENDING") @map("delivery_status")
+  createdAt        DateTime  @default(now()) @map("created_at")
+
+  case PcnCaseMaster @relation(fields: [caseId], references: [id])
+
+  @@map("notification_log")
+}
+
+// ===== PCN 驗證批次（多次 Run 追蹤準確率趨勢）=====
+model VerificationBatch {
+  id            String    @id @default(uuid())
+  batchNumber   String    @unique @map("batch_number")
+  runNumber     Int       @default(1) @map("run_number")
+  parentBatchId String?   @map("parent_batch_id")
+  totalCount    Int       @default(0) @map("total_count")
+  passCount     Int       @default(0) @map("pass_count")
+  failCount     Int       @default(0) @map("fail_count")
+  pendingCount  Int       @default(0) @map("pending_count")
+  accuracy      Float?
+  notes         String?
+  status        String    @default("DRAFT")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  completedAt   DateTime? @map("completed_at")
+
+  records PcnVerificationRecord[]
+
+  @@map("verification_batch")
+}
+
+// ===== 個別 PCN 驗證記錄 =====
+model PcnVerificationRecord {
+  id              String  @id @default(uuid())
+  pcnNumber       String  @map("pcn_number")
+  batchId         String  @map("batch_id")
+  batch           VerificationBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  // Excel reference
+  excelVendor     String  @map("excel_vendor")
+  excelAgent      String? @map("excel_agent")
+  excelTitle      String? @map("excel_title")
+  excelCeOwner    String? @map("excel_ce_owner")
+  excelCategory   String? @map("excel_category")
+  excelCeComment  String? @map("excel_ce_comment")
+  excelNotifyPm   String? @map("excel_notify_pm")
+  excelFollowUp   String? @map("excel_follow_up")
+  excelFolder     String? @map("excel_folder")
+  excelMpnCount   Int     @default(0) @map("excel_mpn_count")
+  excelItemCount  Int     @default(0) @map("excel_item_count")
+  excelMpns       Json?   @map("excel_mpns")
+  excelItems      Json?   @map("excel_items")
+  // App results
+  appEventId      String? @map("app_event_id")
+  appVendor       String? @map("app_vendor")
+  appPcnNumber    String? @map("app_pcn_number")
+  appRiskLevel    String? @map("app_risk_level")
+  appFormChanged  Boolean? @map("app_form_changed")
+  appFitChanged   Boolean? @map("app_fit_changed")
+  appFuncChanged  Boolean? @map("app_func_changed")
+  appMpnCount     Int?    @map("app_mpn_count")
+  appItemCount    Int?    @map("app_item_count")
+  appMpns         Json?   @map("app_mpns")
+  // Comparison
+  mpnMatchCount   Int?    @map("mpn_match_count")
+  mpnOnlyInExcel  Json?   @map("mpn_only_in_excel")
+  mpnOnlyInApp    Json?   @map("mpn_only_in_app")
+  vendorMatch     Boolean? @map("vendor_match")
+  // Status
+  status          String  @default("PENDING") @map("status")
+  emailFileName   String? @map("email_file_name")
+  notes           String?
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@unique([pcnNumber, batchId])
+  @@map("pcn_verification_record")
+}

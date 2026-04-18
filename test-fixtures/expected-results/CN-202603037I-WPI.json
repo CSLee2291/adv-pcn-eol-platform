@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "CN-202603037I-WPI",
+  "vendorName": "Nexperia",
+  "notificationSource": "EMAIL_UPLOAD",
+  "expected": {
+    "riskLevel": "LOW",
+    "formChanged": false,
+    "fitChanged": false,
+    "functionChanged": false,
+    "affectedPartsCount": 143
+  },
+  "tolerance": {
+    "affectedPartsCount": 14
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}

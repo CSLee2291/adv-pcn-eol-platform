@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "D09417-A-R2566",
+  "vendorName": "Murata",
+  "notificationSource": "EMAIL_UPLOAD",
+  "expected": {
+    "riskLevel": "CRITICAL",
+    "formChanged": false,
+    "fitChanged": false,
+    "functionChanged": false,
+    "affectedPartsCount": 5
+  },
+  "tolerance": {
+    "affectedPartsCount": 5
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}

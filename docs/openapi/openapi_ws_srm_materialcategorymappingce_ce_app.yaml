@@ -1,0 +1,1666 @@
+openapi: "3.0.1"
+info:
+  title: "ws_srm_materialcategorymappingce_ce_app"
+  description: "This web service provides operations on these Virtual DataPort views:\n\
+    * \"dx_ce\".\"iv_srm_materialcategorymappingce\": 料階對應CE\t\t\n\nData Owner: Ethanyh.Lin/Elva.Yang"
+  version: "1.0.0"
+externalDocs:
+  description: "Additional information about Denodo REST Web Services"
+  url: "https://community.denodo.com/docs/html/browse/9/vdp/administration/restful_architecture/restful_web_service/restful_web_service"
+servers:
+- url: "https://dataplatform.advantech.com.tw:9443/server/dx_ce/ws_srm_materialcategorymappingce_ce_app"
+security:
+- Basic: []
+tags:
+- name: "iv_srm_materialcategorymappingce"
+  description: "Operations available for view iv_srm_materialcategorymappingce"
+paths:
+  /views/iv_srm_materialcategorymappingce:
+    get:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Returns values of view iv_srm_materialcategorymappingce"
+      operationId: "queryView_iv_srm_materialcategorymappingce"
+      parameters:
+      - name: "PartCategory"
+        in: "query"
+        description: "料階 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "料階 (Virtual DataPort type: text)"
+      - name: "MCateId"
+        in: "query"
+        description: "中分類 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "中分類 (Virtual DataPort type: text)"
+      - name: "SCateId"
+        in: "query"
+        description: "細分類 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "細分類 (Virtual DataPort type: text)"
+      - name: "EMAIL_ADDR"
+        in: "query"
+        description: "負責CE人員 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "負責CE人員 (Virtual DataPort type: text)"
+      - in: "query"
+        $ref: "#/components/parameters/count_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/display_restful_references_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/expand_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/filter_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/group_by_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/having_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/jsoncallback_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/noescape_html_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/order_by_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/select_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/start_index_parameter"
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_response_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_response_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+    post:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Inserts a new row on view iv_srm_materialcategorymappingce"
+      operationId: "insertResource_iv_srm_materialcategorymappingce"
+      parameters:
+      - $ref: "#/components/parameters/user_agent_header_parameter"
+      requestBody:
+        description: "New element"
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/iv_srm_materialcategorymappingce_element_post_def"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/iv_srm_materialcategorymappingce_element_post_def"
+        required: true
+      responses:
+        "201":
+          description: "Success"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_srm_materialcategorymappingce/$count:
+    get:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Returns the number of rows returned by a query to view iv_srm_materialcategorymappingce"
+      operationId: "count_iv_srm_materialcategorymappingce"
+      parameters:
+      - in: "query"
+        $ref: "#/components/parameters/filter_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/group_by_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/having_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/jsoncallback_parameter"
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            text/plain;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "integer"
+                format: "int64"
+        "204":
+          description: "No results were returned"
+          content:
+            text/plain;charset=UTF-8;subtype=denodo-9: {}
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_srm_materialcategorymappingce/$metadata:
+    get:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Returns the metadata of view iv_srm_materialcategorymappingce.\
+        \ This includes the description of the view and the URLs to retrieve its schema\
+        \ and its associations."
+      operationId: "metadata_iv_srm_materialcategorymappingce"
+      parameters:
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_metadata_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_metadata_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_srm_materialcategorymappingce/$associations:
+    get:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Returns the metadata of the associations related to view iv_srm_materialcategorymappingce\
+        \ that are published with the service"
+      operationId: "associations_iv_srm_materialcategorymappingceiv_srm_materialcategorymappingce"
+      parameters:
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/associations_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/associations_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_srm_materialcategorymappingce/$schema:
+    get:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Returns the schema of view iv_srm_materialcategorymappingce. This\
+        \ a list of the published fields and types of the view. The names of the fields\
+        \ are as they appear in the web service, not in the view (they may have been\
+        \ renamed in the web service's configuration)"
+      operationId: "schema_iv_srm_materialcategorymappingce"
+      parameters:
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_schema_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_schema_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_srm_materialcategorymappingce/$xsd:
+    get:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Returns the XSD describing the view iv_srm_materialcategorymappingce.\
+        \ It contains the link to the XSD schema describing the view output."
+      operationId: "xsd_iv_srm_materialcategorymappingce"
+      parameters:
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_xsd_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_srm_materialcategorymappingce/$xsd-view-def:
+    get:
+      tags:
+      - "iv_srm_materialcategorymappingce"
+      description: "Returns the XSD describing the output of view iv_srm_materialcategorymappingce.\
+        \ It contains the published fields and types of the view. The names of the\
+        \ fields are as they appear in the web service, not in the view (they may\
+        \ have been renamed in the web service's configuration)"
+      operationId: "xsd_view_def_iv_srm_materialcategorymappingce"
+      parameters:
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_srm_materialcategorymappingce_xsd_view_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+components:
+  schemas:
+    links_def:
+      type: "object"
+      properties:
+        rel:
+          type: "string"
+          xml:
+            attribute: true
+        href:
+          type: "string"
+          xml:
+            attribute: true
+        title:
+          type: "string"
+          xml:
+            attribute: true
+        type:
+          type: "string"
+          description: "MIME type of a blob"
+          xml:
+            attribute: true
+      xml:
+        name: "link"
+        namespace: "http://www.w3.org/2005/Atom"
+    associations_def:
+      type: "object"
+      properties:
+        view-name:
+          type: "string"
+          description: "Virtual DataPort view name"
+          xml:
+            attribute: true
+        association-metadata:
+          minItems: 0
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                description: "Association name"
+                xml:
+                  attribute: true
+              referential-constraint:
+                type: "boolean"
+                description: "Whether this association defines a referential constraint\
+                  \ or not"
+                xml:
+                  attribute: true
+              endpoints:
+                maxItems: 2
+                minItems: 2
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    view-name:
+                      type: "string"
+                      description: "Virtual DataPort view name at this end point"
+                      xml:
+                        attribute: true
+                    role-name:
+                      type: "string"
+                      description: "Role name at this endpoint"
+                      xml:
+                        attribute: true
+                    role-description:
+                      type: "string"
+                      description: "Role description"
+                      xml:
+                        attribute: true
+                    multiplicity:
+                      type: "string"
+                      description: "Multiplicity at this end point"
+                      xml:
+                        attribute: true
+                      enum:
+                      - "0,1"
+                      - "1"
+                      - "0,*"
+                      - "+"
+                    principal:
+                      type: "boolean"
+                      description: "Whether this end point is principal or dependent"
+                      xml:
+                        attribute: true
+              link:
+                $ref: "#/components/schemas/links_def"
+        link:
+          $ref: "#/components/schemas/links_def"
+      xml:
+        name: "view-associations"
+        namespace: "http://www.denodo.com/restful"
+    errors_def:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+          xml:
+            attribute: true
+        message:
+          type: "string"
+          xml:
+            attribute: true
+        dataSource:
+          type: "string"
+          xml:
+            attribute: true
+        httpStatusCode:
+          type: "integer"
+          xml:
+            attribute: true
+        httpErrorReturnedBySource:
+          type: "string"
+          xml:
+            attribute: true
+      xml:
+        name: "error"
+    info_def:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+          xml:
+            attribute: true
+        message:
+          type: "string"
+          xml:
+            attribute: true
+      xml:
+        name: "info"
+    iv_srm_materialcategorymappingce_element_def:
+      properties:
+        PartCategory:
+          type: "string"
+          description: "料階 (Virtual DataPort type: text)"
+        MCateId:
+          type: "string"
+          description: "中分類 (Virtual DataPort type: text)"
+        SCateId:
+          type: "string"
+          description: "細分類 (Virtual DataPort type: text)"
+        EMAIL_ADDR:
+          type: "string"
+          description: "負責CE人員 (Virtual DataPort type: text)"
+        links:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/links_def"
+      description: "Extended schema of view iv_srm_materialcategorymappingce"
+      xml:
+        name: "iv_srm_materialcategorymappingce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_srm_materialcategorymappingce"
+    iv_srm_materialcategorymappingce_element_post_def:
+      properties:
+        PartCategory:
+          type: "string"
+          description: "料階 (Virtual DataPort type: text)"
+        MCateId:
+          type: "string"
+          description: "中分類 (Virtual DataPort type: text)"
+        SCateId:
+          type: "string"
+          description: "細分類 (Virtual DataPort type: text)"
+        EMAIL_ADDR:
+          type: "string"
+          description: "負責CE人員 (Virtual DataPort type: text)"
+      description: "Schema of view iv_srm_materialcategorymappingce as required by\
+        \ POST requests"
+      xml:
+        name: "iv_srm_materialcategorymappingce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_srm_materialcategorymappingce"
+    iv_srm_materialcategorymappingce_element_put_def:
+      properties:
+        PartCategory:
+          type: "string"
+          description: "料階 (Virtual DataPort type: text)"
+        MCateId:
+          type: "string"
+          description: "中分類 (Virtual DataPort type: text)"
+        SCateId:
+          type: "string"
+          description: "細分類 (Virtual DataPort type: text)"
+        EMAIL_ADDR:
+          type: "string"
+          description: "負責CE人員 (Virtual DataPort type: text)"
+      description: "Schema of view iv_srm_materialcategorymappingce as required by\
+        \ PUT requests"
+      xml:
+        name: "iv_srm_materialcategorymappingce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_srm_materialcategorymappingce"
+    iv_srm_materialcategorymappingce_element_simplified_def:
+      properties:
+        PartCategory:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        MCateId:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        SCateId:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        EMAIL_ADDR:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+      description: "Schema of view iv_srm_materialcategorymappingce"
+      xml:
+        name: "iv_srm_materialcategorymappingce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_srm_materialcategorymappingce"
+    iv_srm_materialcategorymappingce_xsd_def:
+      properties:
+        denodo:
+          type: "string"
+          description: "Denodo namespace: http://www.denodo.com/restful"
+          xml:
+            attribute: true
+        atom:
+          type: "string"
+          description: "Atom namespace: http://www.w3.org/2005/Atom"
+          xml:
+            attribute: true
+        attributeFormDefault:
+          type: "string"
+          description: "The form for attributes declared in the target namespace of\
+            \ this schema: unqualified"
+          xml:
+            attribute: true
+        elementFormDefault:
+          type: "string"
+          description: "The form for elements declared in the target namespace of\
+            \ this schema: qualified"
+          xml:
+            attribute: true
+        targetNamespace:
+          type: "string"
+          description: "Namespace defined by this XSD: http://www.denodo.com/restful"
+          xml:
+            attribute: true
+        import:
+          type: "object"
+          properties:
+            schemaLocation:
+              type: "string"
+              description: "Schema's location: $xsd-view-def"
+              xml:
+                attribute: true
+            namespace:
+              type: "string"
+              description: "Schema's target namespace: http://www.denodo.com/restful/dx_ce/views/iv_srm_materialcategorymappingce"
+              xml:
+                attribute: true
+          description: "Import for schema $xsd-view-def"
+        element:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              description: "View element"
+              xml:
+                attribute: true
+            complexType:
+              type: "object"
+              properties:
+                sequence:
+                  type: "object"
+                  properties:
+                    viewLink:
+                      type: "object"
+                      properties:
+                        xmlns:q1:
+                          type: "string"
+                          description: "http://www.denodo.com/restful/dx_ce/views/iv_srm_materialcategorymappingce"
+                          xml:
+                            attribute: true
+                        maxOccurs:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                        ref:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    atomlink:
+                      type: "object"
+                      properties:
+                        maxOccurs:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                        ref:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                attribute:
+                  type: "object"
+                  properties:
+                    name:
+                      type: "string"
+                      description: "iv_srm_materialcategorymappingce"
+                      xml:
+                        attribute: true
+                    type:
+                      type: "string"
+                      description: "string"
+                      xml:
+                        attribute: true
+                    use:
+                      type: "string"
+                      description: "string"
+                      xml:
+                        attribute: true
+                  description: "Name of the view: iv_srm_materialcategorymappingce"
+      description: "Schema of view iv_srm_materialcategorymappingce in XSD format"
+      xml:
+        name: "schema"
+        namespace: "http://www.w3.org/2001/XMLSchema"
+    iv_srm_materialcategorymappingce_xsd_view_def:
+      properties:
+        denodo:
+          type: "string"
+          description: "Denodo namespace: http://www.denodo.com/restful"
+          xml:
+            attribute: true
+        atom:
+          type: "string"
+          description: "Atom namespace: http://www.w3.org/2005/Atom"
+          xml:
+            attribute: true
+        attributeFormDefault:
+          type: "string"
+          description: "The form for attributes declared in the target namespace of\
+            \ this schema: unqualified"
+          xml:
+            attribute: true
+        elementFormDefault:
+          type: "string"
+          description: "The form for elements declared in the target namespace of\
+            \ this schema: qualified"
+          xml:
+            attribute: true
+        targetNamespace:
+          type: "string"
+          description: "Namespace defined by this XSD: http://www.denodo.com/restful/dx_ce/views/iv_srm_materialcategorymappingce"
+          xml:
+            attribute: true
+        import:
+          type: "object"
+          properties:
+            schemaLocation:
+              type: "string"
+              description: "Schema's location: atom.xsd"
+              xml:
+                attribute: true
+            namespace:
+              type: "string"
+              description: "Schema's target namespace: http://www.w3.org/2005/Atom"
+              xml:
+                attribute: true
+          description: "Import for schema atom.xsd"
+        element:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              description: "Names of the view: iv_srm_materialcategorymappingce"
+              xml:
+                attribute: true
+            complexType:
+              type: "object"
+              properties:
+                sequence:
+                  type: "object"
+                  properties:
+                    PartCategory:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    MCateId:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    SCateId:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    EMAIL_ADDR:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    element:
+                      type: "object"
+                      properties:
+                        maxOccurs:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        xmlns:q1:
+                          type: "string"
+                          description: "http://www.w3.org/2005/Atom"
+                          xml:
+                            attribute: true
+                        ref:
+                          type: "string"
+                          description: "q1:link"
+                          xml:
+                            attribute: true
+      description: "Schema of view iv_srm_materialcategorymappingce in XSD format"
+      xml:
+        name: "schema"
+        namespace: "http://www.w3.org/2001/XMLSchema"
+    iv_srm_materialcategorymappingce_response_def:
+      properties:
+        name:
+          type: "string"
+          description: "Virtual DataPort view name"
+          xml:
+            attribute: true
+        description:
+          type: "string"
+          description: "Virtual DataPort view description"
+          xml:
+            attribute: true
+        elements:
+          type: "array"
+          description: "Results returned by the query"
+          items:
+            $ref: "#/components/schemas/iv_srm_materialcategorymappingce_element_def"
+        links:
+          type: "array"
+          description: "Links available for the current element (e.g. pagination links)"
+          items:
+            $ref: "#/components/schemas/links_def"
+        __errors__:
+          type: "array"
+          xml:
+            name: "__errors__"
+            wrapped: true
+          items:
+            $ref: "#/components/schemas/errors_def"
+        __info__:
+          type: "array"
+          xml:
+            name: "__info__"
+            wrapped: true
+          items:
+            $ref: "#/components/schemas/info_def"
+      xml:
+        name: "view"
+        namespace: "http://www.denodo.com/restful"
+    iv_srm_materialcategorymappingce_schema_def:
+      properties:
+        name:
+          type: "string"
+          description: "Virtual DataPort view name"
+        properties:
+          $ref: "#/components/schemas/iv_srm_materialcategorymappingce_element_simplified_def"
+    iv_srm_materialcategorymappingce_metadata_def:
+      properties:
+        name:
+          type: "string"
+          description: "Virtual DataPort database name"
+          xml:
+            attribute: true
+        description:
+          type: "string"
+          description: "Virtual DataPort database description"
+          xml:
+            attribute: true
+        views-metadata:
+          maxItems: 1
+          minItems: 1
+          type: "array"
+          items:
+            required:
+            - "links"
+            - "name"
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                description: "Virtual DataPort view name"
+                xml:
+                  attribute: true
+              links:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/links_def"
+            xml:
+              name: "view-metadata"
+      xml:
+        name: "db"
+        namespace: "http://www.denodo.com/restful"
+  parameters:
+    format_parameter:
+      name: "$format"
+      in: "query"
+      description: "Defines the output format of the query"
+      schema:
+        type: "string"
+        default: "JSON"
+        enum:
+        - "XML"
+        - "JSON"
+    filter_parameter:
+      name: "$filter"
+      in: "query"
+      description: "Filters the rows of a view using any condition. Any expression\
+        \ that can appear in the WHERE clause of a VQL query can be used."
+      schema:
+        type: "string"
+    select_parameter:
+      name: "$select"
+      in: "query"
+      description: "Comma-separated list of fields to be returned in the result"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    group_by_parameter:
+      name: "$groupby"
+      in: "query"
+      description: "Comma-separated list of fields to group by with"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    having_parameter:
+      name: "$having"
+      in: "query"
+      description: "Comma-separated list of fields to add to the HAVING clause of\
+        \ the query"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    order_by_parameter:
+      name: "$orderby"
+      in: "query"
+      description: "Sorts the results by one or more fields. It is a comma-separated\
+        \ list of fields, each one followed by the modifier ASC (for ascending order)\
+        \ and DESC (for descending order)."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    expand_parameter:
+      name: "$expand"
+      in: "query"
+      description: "Roles to expand in the query"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    start_index_parameter:
+      name: "$start_index"
+      in: "query"
+      description: "Used for pagination in view resources"
+      schema:
+        minimum: 0
+        type: "integer"
+        format: "int32"
+    count_parameter:
+      name: "$count"
+      in: "query"
+      description: "Used for pagination in view resources"
+      schema:
+        minimum: 0
+        type: "integer"
+        format: "int32"
+    jsoncallback_parameter:
+      name: "$jsoncallback"
+      in: "query"
+      description: "The JSON representation can return the data of a view prefixed\
+        \ with the name of a function. This is called JSON with padding or JSONP.\
+        \ That way, when a browser receives the response, it receives a script rather\
+        \ than data."
+      schema:
+        type: "string"
+    display_restful_references_parameter:
+      name: "$displayRESTfulReferences"
+      in: "query"
+      description: "By default, the result of requesting a view contains, in each\
+        \ row, a link to the row itself and, for each association of the view, a link\
+        \ to traverse the association. By using this parameter, you can configure\
+        \ this behavior."
+      schema:
+        type: "boolean"
+        default: true
+    noescape_html_parameter:
+      name: "$noescapehtml"
+      in: "query"
+      description: "List of comma-separated fields whose values will not be HTML escaped."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    user_agent_header_parameter:
+      name: "User-agent"
+      in: "header"
+      description: "By including this header, communication between the web service\
+        \ and the Virtual DataPort will be configured with this value."
+      schema:
+        type: "string"
+    infrastructure_provider_header_parameter:
+      name: "Infrastructure-provider"
+      in: "header"
+      description: "By including this header, the hosting type of the client can be\
+        \ specified."
+      schema:
+        type: "string"
+    infrastructure_region_header_parameter:
+      name: "Infrastructure-region"
+      in: "header"
+      description: "By including this header, the region of the client can be specified."
+      schema:
+        type: "string"
+  securitySchemes:
+    Basic:
+      type: "http"
+      description: "HTTP basic"
+      scheme: "basic"

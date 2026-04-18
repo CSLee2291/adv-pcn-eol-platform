@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "4952(A)",
+  "vendorName": "AMD",
+  "notificationSource": "EMAIL_UPLOAD",
+  "expected": {
+    "riskLevel": "MEDIUM",
+    "formChanged": true,
+    "fitChanged": false,
+    "functionChanged": false,
+    "affectedPartsCount": 240
+  },
+  "tolerance": {
+    "affectedPartsCount": 24
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}

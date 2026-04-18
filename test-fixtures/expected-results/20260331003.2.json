@@ -1,0 +1,18 @@
+{
+  "pcnNumber": "20260331003.2",
+  "vendorName": "Texas Instruments",
+  "notificationSource": "MANUAL_UPLOAD",
+  "expected": {
+    "riskLevel": "MEDIUM",
+    "formChanged": true,
+    "fitChanged": false,
+    "functionChanged": false,
+    "affectedPartsCount": 4
+  },
+  "tolerance": {
+    "affectedPartsCount": 5,
+    "fitChangedFlexible": true
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "Test runner TR-20260404-2957 — updated for AI non-determinism"
+}

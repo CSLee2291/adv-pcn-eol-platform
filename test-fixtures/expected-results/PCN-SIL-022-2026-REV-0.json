@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "PCN-SIL-022-2026-REV-0",
+  "vendorName": "Vishay",
+  "notificationSource": "EMAIL_UPLOAD",
+  "expected": {
+    "riskLevel": "MEDIUM",
+    "formChanged": true,
+    "fitChanged": false,
+    "functionChanged": false,
+    "affectedPartsCount": 35
+  },
+  "tolerance": {
+    "affectedPartsCount": 5
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}

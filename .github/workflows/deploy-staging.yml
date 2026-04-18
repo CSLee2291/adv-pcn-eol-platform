@@ -1,0 +1,68 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [develop]
+
+env:
+  NODE_VERSION: "20"
+  PNPM_VERSION: "9"
+
+jobs:
+  deploy-staging:
+    name: Deploy to Azure Staging
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: pnpm --filter api run db:generate
+
+      - name: Build API
+        run: pnpm --filter api build
+
+      - name: Build Web
+        env:
+          VITE_API_URL: ${{ vars.STAGING_API_URL }}
+        run: pnpm --filter web build
+
+      - name: Run Migrations (Staging)
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+        run: pnpm --filter api exec prisma migrate deploy
+
+      # TODO: Replace with your Azure deployment method
+      # Option A: Azure App Service
+      # - uses: azure/webapps-deploy@v3
+      #   with:
+      #     app-name: pcn-eol-api-staging
+      #     package: apps/api/
+
+      # Option B: Docker build + push to ACR
+      # - uses: azure/docker-login@v2
+      #   with:
+      #     login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+      #     username: ${{ secrets.ACR_USERNAME }}
+      #     password: ${{ secrets.ACR_PASSWORD }}
+      # - run: |
+      #     docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/pcn-api:staging ./apps/api
+      #     docker push ${{ secrets.ACR_LOGIN_SERVER }}/pcn-api:staging
+
+      - name: Deploy Summary
+        run: |
+          echo "## Staging Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY

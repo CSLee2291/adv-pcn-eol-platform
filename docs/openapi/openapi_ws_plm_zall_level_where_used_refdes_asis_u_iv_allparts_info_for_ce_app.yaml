@@ -1,0 +1,2879 @@
+openapi: "3.0.1"
+info:
+  title: "ws_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_app"
+  description: "This web service provides operations on these Virtual DataPort views:\n\
+    * \"dx_ce\".\"iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce\""
+  version: "1.0.0"
+externalDocs:
+  description: "Additional information about Denodo REST Web Services"
+  url: "https://community.denodo.com/docs/html/browse/9/vdp/administration/restful_architecture/restful_web_service/restful_web_service"
+servers:
+- url: "https://dataplatform.advantech.com.tw:9443/server/dx_ce/ws_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_app"
+security:
+- Basic: []
+tags:
+- name: "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+  description: "Operations available for view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+paths:
+  /views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce:
+    get:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Returns values of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      operationId: "queryView_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - name: "Item_Number"
+        in: "query"
+        description: "Virtual DataPort type: text"
+        required: false
+        schema:
+          type: "string"
+          description: "Virtual DataPort type: text"
+      - name: "Item_Number_ID"
+        in: "query"
+        description: "Item_Number_ID (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Item_Number_ID (Virtual DataPort type: text)"
+      - name: "Item_Number_Part_Cat"
+        in: "query"
+        description: "Parent Item part category (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Parent Item part category (Virtual DataPort type: text)"
+      - name: "STUFE"
+        in: "query"
+        description: "Level of BOM (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Level of BOM (Virtual DataPort type: text)"
+      - name: "IDNRK"
+        in: "query"
+        description: "Component item number (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Component item number (Virtual DataPort type: text)"
+      - name: "IDNRK_Part_Cat"
+        in: "query"
+        description: "Component item number part category (Virtual DataPort type:\
+          \ text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Component item number part category (Virtual DataPort type:\
+            \ text)"
+      - name: "PIDNRK"
+        in: "query"
+        description: "Semi-Product item number (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Semi-Product item number (Virtual DataPort type: text)"
+      - name: "PIDNRK_Part_Cat"
+        in: "query"
+        description: "Semi-Product item number part category (Virtual DataPort type:\
+          \ text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Semi-Product item number part category (Virtual DataPort type:\
+            \ text)"
+      - name: "LifeCycle_Phase"
+        in: "query"
+        description: "Component lifecycle phase (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Component lifecycle phase (Virtual DataPort type: text)"
+      - name: "Description"
+        in: "query"
+        description: "Component description (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Component description (Virtual DataPort type: text)"
+      - name: "REV_Number"
+        in: "query"
+        description: "Component rev number (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Component rev number (Virtual DataPort type: text)"
+      - name: "ESTIMATE_GREEN_STATUS"
+        in: "query"
+        description: "estimate Green Status (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "estimate Green Status (Virtual DataPort type: text)"
+      - name: "Request_for_Plant"
+        in: "query"
+        description: "Request for plant (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Request for plant (Virtual DataPort type: text)"
+      - name: "LTB_Date"
+        in: "query"
+        description: "Last Time Buy (Virtual DataPort type: timestamp, format: yyyy-MM-ddTHH:mm:ss.SSS)"
+        required: false
+        schema:
+          type: "string"
+          description: "Last Time Buy (Virtual DataPort type: timestamp, format: yyyy-MM-ddTHH:mm:ss.SSS)"
+      - name: "Product_Owner"
+        in: "query"
+        description: "Product Owner (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Product Owner (Virtual DataPort type: text)"
+      - name: "Model_Name"
+        in: "query"
+        description: "Model name (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Model name (Virtual DataPort type: text)"
+      - name: "OEM_ODM_Type"
+        in: "query"
+        description: "OEM ODM Type (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "OEM ODM Type (Virtual DataPort type: text)"
+      - name: "FIND_NUMBER"
+        in: "query"
+        description: "Find Number (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Find Number (Virtual DataPort type: text)"
+      - name: "QTY"
+        in: "query"
+        description: "Quantity (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Quantity (Virtual DataPort type: text)"
+      - name: "IDNRK_LOCATION"
+        in: "query"
+        description: "Component Location (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Component Location (Virtual DataPort type: text)"
+      - name: "PCB_MATNR"
+        in: "query"
+        description: "PCB_MATNR (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "PCB_MATNR (Virtual DataPort type: text)"
+      - name: "Item_Number_LifeCycle_Phase"
+        in: "query"
+        description: "Item_Number_LifeCycle_Phase (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "Item_Number_LifeCycle_Phase (Virtual DataPort type: text)"
+      - name: "PIDNRK_LifeCycle_Phase"
+        in: "query"
+        description: "PIDNRK_LifeCycle_Phase (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "PIDNRK_LifeCycle_Phase (Virtual DataPort type: text)"
+      - name: "PrjCode"
+        in: "query"
+        description: "專案代碼，記錄相關的專案標識碼。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "專案代碼，記錄相關的專案標識碼。 (Virtual DataPort type: text)"
+      - name: "CO_MATNR_CAT"
+        in: "query"
+        description: "零組件的材料分類 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "零組件的材料分類 (Virtual DataPort type: text)"
+      - name: "ZZMCATG_M"
+        in: "query"
+        description: "零件資訊的分類層級 3，用於零件分類的分組。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "零件資訊的分類層級 3，用於零件分類的分組。 (Virtual DataPort type: text)"
+      - name: "ZZMCATG_S"
+        in: "query"
+        description: "零件資訊的分類層級 4，細化零件的分類。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "零件資訊的分類層級 4，細化零件的分類。 (Virtual DataPort type: text)"
+      - name: "STRA_LV1"
+        in: "query"
+        description: "代表策略層級1，用於高階分類或管理用途。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "代表策略層級1，用於高階分類或管理用途。 (Virtual DataPort type: text)"
+      - name: "STRA_LV2"
+        in: "query"
+        description: "代表策略層級2，用於細分分類或進一步管理。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "代表策略層級2，用於細分分類或進一步管理。 (Virtual DataPort type: text)"
+      - name: "CATE_M_NAME"
+        in: "query"
+        description: "零件分類名稱，提供主要分類的名稱描述。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "零件分類名稱，提供主要分類的名稱描述。 (Virtual DataPort type: text)"
+      - name: "CATE_S_NAME"
+        in: "query"
+        description: "產品的次分類名稱，用於標示更精細的類別層級。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "產品的次分類名稱，用於標示更精細的類別層級。 (Virtual DataPort type: text)"
+      - name: "Part_Cat"
+        in: "query"
+        description: "零件分類，記錄零件的類別或類型。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "零件分類，記錄零件的類別或類型。 (Virtual DataPort type: text)"
+      - name: "EAIPG"
+        in: "query"
+        description: "電子應用組別或相關分類的參數描述。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "電子應用組別或相關分類的參數描述。 (Virtual DataPort type: text)"
+      - name: "EAIPD"
+        in: "query"
+        description: "電子應用或內部標識的參數描述。 (Virtual DataPort type: text)"
+        required: false
+        schema:
+          type: "string"
+          description: "電子應用或內部標識的參數描述。 (Virtual DataPort type: text)"
+      - in: "query"
+        $ref: "#/components/parameters/count_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/display_restful_references_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/expand_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/filter_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/group_by_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/having_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/jsoncallback_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/noescape_html_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/order_by_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/select_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/start_index_parameter"
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_response_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_response_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+    post:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Inserts a new row on view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      operationId: "insertResource_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - $ref: "#/components/parameters/user_agent_header_parameter"
+      requestBody:
+        description: "New element"
+        content:
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_post_def"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_post_def"
+        required: true
+      responses:
+        "201":
+          description: "Success"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce/$count:
+    get:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Returns the number of rows returned by a query to view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      operationId: "count_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - in: "query"
+        $ref: "#/components/parameters/filter_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/group_by_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/having_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/jsoncallback_parameter"
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            text/plain;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "integer"
+                format: "int64"
+        "204":
+          description: "No results were returned"
+          content:
+            text/plain;charset=UTF-8;subtype=denodo-9: {}
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce/$metadata:
+    get:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Returns the metadata of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce.\
+        \ This includes the description of the view and the URLs to retrieve its schema\
+        \ and its associations."
+      operationId: "metadata_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_metadata_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_metadata_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce/$associations:
+    get:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Returns the metadata of the associations related to view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce\
+        \ that are published with the service"
+      operationId: "associations_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ceiv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - in: "query"
+        $ref: "#/components/parameters/format_parameter"
+      - in: "query"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/associations_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/associations_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce/$schema:
+    get:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Returns the schema of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce.\
+        \ This a list of the published fields and types of the view. The names of\
+        \ the fields are as they appear in the web service, not in the view (they\
+        \ may have been renamed in the web service's configuration)"
+      operationId: "schema_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_schema_def"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_schema_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+            application/json;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce/$xsd:
+    get:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Returns the XSD describing the view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce.\
+        \ It contains the link to the XSD schema describing the view output."
+      operationId: "xsd_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_xsd_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+  /views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce/$xsd-view-def:
+    get:
+      tags:
+      - "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Returns the XSD describing the output of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce.\
+        \ It contains the published fields and types of the view. The names of the\
+        \ fields are as they appear in the web service, not in the view (they may\
+        \ have been renamed in the web service's configuration)"
+      operationId: "xsd_view_def_iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      parameters:
+      - in: "header"
+        $ref: "#/components/parameters/user_agent_header_parameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_xsd_view_def"
+        "400":
+          description: "Bad request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "401":
+          description: "Authentication failed"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "403":
+          description: "Insufficient permissions to perform this request"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+        "500":
+          description: "Runtime error"
+          content:
+            application/xml;charset=UTF-8;subtype=denodo-9:
+              schema:
+                type: "object"
+                properties:
+                  __errors__:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/errors_def"
+                xml:
+                  name: "__errors__"
+                  namespace: "http://www.denodo.com/restful"
+components:
+  schemas:
+    links_def:
+      type: "object"
+      properties:
+        rel:
+          type: "string"
+          xml:
+            attribute: true
+        href:
+          type: "string"
+          xml:
+            attribute: true
+        title:
+          type: "string"
+          xml:
+            attribute: true
+        type:
+          type: "string"
+          description: "MIME type of a blob"
+          xml:
+            attribute: true
+      xml:
+        name: "link"
+        namespace: "http://www.w3.org/2005/Atom"
+    associations_def:
+      type: "object"
+      properties:
+        view-name:
+          type: "string"
+          description: "Virtual DataPort view name"
+          xml:
+            attribute: true
+        association-metadata:
+          minItems: 0
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                description: "Association name"
+                xml:
+                  attribute: true
+              referential-constraint:
+                type: "boolean"
+                description: "Whether this association defines a referential constraint\
+                  \ or not"
+                xml:
+                  attribute: true
+              endpoints:
+                maxItems: 2
+                minItems: 2
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    view-name:
+                      type: "string"
+                      description: "Virtual DataPort view name at this end point"
+                      xml:
+                        attribute: true
+                    role-name:
+                      type: "string"
+                      description: "Role name at this endpoint"
+                      xml:
+                        attribute: true
+                    role-description:
+                      type: "string"
+                      description: "Role description"
+                      xml:
+                        attribute: true
+                    multiplicity:
+                      type: "string"
+                      description: "Multiplicity at this end point"
+                      xml:
+                        attribute: true
+                      enum:
+                      - "0,1"
+                      - "1"
+                      - "0,*"
+                      - "+"
+                    principal:
+                      type: "boolean"
+                      description: "Whether this end point is principal or dependent"
+                      xml:
+                        attribute: true
+              link:
+                $ref: "#/components/schemas/links_def"
+        link:
+          $ref: "#/components/schemas/links_def"
+      xml:
+        name: "view-associations"
+        namespace: "http://www.denodo.com/restful"
+    errors_def:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+          xml:
+            attribute: true
+        message:
+          type: "string"
+          xml:
+            attribute: true
+        dataSource:
+          type: "string"
+          xml:
+            attribute: true
+        httpStatusCode:
+          type: "integer"
+          xml:
+            attribute: true
+        httpErrorReturnedBySource:
+          type: "string"
+          xml:
+            attribute: true
+      xml:
+        name: "error"
+    info_def:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+          xml:
+            attribute: true
+        message:
+          type: "string"
+          xml:
+            attribute: true
+      xml:
+        name: "info"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_def:
+      properties:
+        Item_Number:
+          type: "string"
+          description: "Virtual DataPort type: text"
+        Item_Number_ID:
+          type: "string"
+          description: "Item_Number_ID (Virtual DataPort type: text)"
+        Item_Number_Part_Cat:
+          type: "string"
+          description: "Parent Item part category (Virtual DataPort type: text)"
+        STUFE:
+          type: "string"
+          description: "Level of BOM (Virtual DataPort type: text)"
+        IDNRK:
+          type: "string"
+          description: "Component item number (Virtual DataPort type: text)"
+        IDNRK_Part_Cat:
+          type: "string"
+          description: "Component item number part category (Virtual DataPort type:\
+            \ text)"
+        PIDNRK:
+          type: "string"
+          description: "Semi-Product item number (Virtual DataPort type: text)"
+        PIDNRK_Part_Cat:
+          type: "string"
+          description: "Semi-Product item number part category (Virtual DataPort type:\
+            \ text)"
+        LifeCycle_Phase:
+          type: "string"
+          description: "Component lifecycle phase (Virtual DataPort type: text)"
+        Description:
+          type: "string"
+          description: "Component description (Virtual DataPort type: text)"
+        REV_Number:
+          type: "string"
+          description: "Component rev number (Virtual DataPort type: text)"
+        ESTIMATE_GREEN_STATUS:
+          type: "string"
+          description: "estimate Green Status (Virtual DataPort type: text)"
+        Request_for_Plant:
+          type: "string"
+          description: "Request for plant (Virtual DataPort type: text)"
+        LTB_Date:
+          type: "string"
+          description: "Last Time Buy (Virtual DataPort type: timestamp, format: yyyy-MM-ddTHH:mm:ss.SSS)"
+        Product_Owner:
+          type: "string"
+          description: "Product Owner (Virtual DataPort type: text)"
+        Model_Name:
+          type: "string"
+          description: "Model name (Virtual DataPort type: text)"
+        OEM_ODM_Type:
+          type: "string"
+          description: "OEM ODM Type (Virtual DataPort type: text)"
+        FIND_NUMBER:
+          type: "string"
+          description: "Find Number (Virtual DataPort type: text)"
+        QTY:
+          type: "string"
+          description: "Quantity (Virtual DataPort type: text)"
+        IDNRK_LOCATION:
+          type: "string"
+          description: "Component Location (Virtual DataPort type: text)"
+        PCB_MATNR:
+          type: "string"
+          description: "PCB_MATNR (Virtual DataPort type: text)"
+        Item_Number_LifeCycle_Phase:
+          type: "string"
+          description: "Item_Number_LifeCycle_Phase (Virtual DataPort type: text)"
+        PIDNRK_LifeCycle_Phase:
+          type: "string"
+          description: "PIDNRK_LifeCycle_Phase (Virtual DataPort type: text)"
+        PrjCode:
+          type: "string"
+          description: "專案代碼，記錄相關的專案標識碼。 (Virtual DataPort type: text)"
+        CO_MATNR_CAT:
+          type: "string"
+          description: "零組件的材料分類 (Virtual DataPort type: text)"
+        ZZMCATG_M:
+          type: "string"
+          description: "零件資訊的分類層級 3，用於零件分類的分組。 (Virtual DataPort type: text)"
+        ZZMCATG_S:
+          type: "string"
+          description: "零件資訊的分類層級 4，細化零件的分類。 (Virtual DataPort type: text)"
+        STRA_LV1:
+          type: "string"
+          description: "代表策略層級1，用於高階分類或管理用途。 (Virtual DataPort type: text)"
+        STRA_LV2:
+          type: "string"
+          description: "代表策略層級2，用於細分分類或進一步管理。 (Virtual DataPort type: text)"
+        CATE_M_NAME:
+          type: "string"
+          description: "零件分類名稱，提供主要分類的名稱描述。 (Virtual DataPort type: text)"
+        CATE_S_NAME:
+          type: "string"
+          description: "產品的次分類名稱，用於標示更精細的類別層級。 (Virtual DataPort type: text)"
+        Part_Cat:
+          type: "string"
+          description: "零件分類，記錄零件的類別或類型。 (Virtual DataPort type: text)"
+        EAIPG:
+          type: "string"
+          description: "電子應用組別或相關分類的參數描述。 (Virtual DataPort type: text)"
+        EAIPD:
+          type: "string"
+          description: "電子應用或內部標識的參數描述。 (Virtual DataPort type: text)"
+        links:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/links_def"
+      description: "Extended schema of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      xml:
+        name: "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_post_def:
+      properties:
+        Item_Number:
+          type: "string"
+          description: "Virtual DataPort type: text"
+        Item_Number_ID:
+          type: "string"
+          description: "Item_Number_ID (Virtual DataPort type: text)"
+        Item_Number_Part_Cat:
+          type: "string"
+          description: "Parent Item part category (Virtual DataPort type: text)"
+        STUFE:
+          type: "string"
+          description: "Level of BOM (Virtual DataPort type: text)"
+        IDNRK:
+          type: "string"
+          description: "Component item number (Virtual DataPort type: text)"
+        IDNRK_Part_Cat:
+          type: "string"
+          description: "Component item number part category (Virtual DataPort type:\
+            \ text)"
+        PIDNRK:
+          type: "string"
+          description: "Semi-Product item number (Virtual DataPort type: text)"
+        PIDNRK_Part_Cat:
+          type: "string"
+          description: "Semi-Product item number part category (Virtual DataPort type:\
+            \ text)"
+        LifeCycle_Phase:
+          type: "string"
+          description: "Component lifecycle phase (Virtual DataPort type: text)"
+        Description:
+          type: "string"
+          description: "Component description (Virtual DataPort type: text)"
+        REV_Number:
+          type: "string"
+          description: "Component rev number (Virtual DataPort type: text)"
+        ESTIMATE_GREEN_STATUS:
+          type: "string"
+          description: "estimate Green Status (Virtual DataPort type: text)"
+        Request_for_Plant:
+          type: "string"
+          description: "Request for plant (Virtual DataPort type: text)"
+        LTB_Date:
+          type: "string"
+          description: "Last Time Buy (Virtual DataPort type: timestamp, format: yyyy-MM-ddTHH:mm:ss.SSS)"
+        Product_Owner:
+          type: "string"
+          description: "Product Owner (Virtual DataPort type: text)"
+        Model_Name:
+          type: "string"
+          description: "Model name (Virtual DataPort type: text)"
+        OEM_ODM_Type:
+          type: "string"
+          description: "OEM ODM Type (Virtual DataPort type: text)"
+        FIND_NUMBER:
+          type: "string"
+          description: "Find Number (Virtual DataPort type: text)"
+        QTY:
+          type: "string"
+          description: "Quantity (Virtual DataPort type: text)"
+        IDNRK_LOCATION:
+          type: "string"
+          description: "Component Location (Virtual DataPort type: text)"
+        PCB_MATNR:
+          type: "string"
+          description: "PCB_MATNR (Virtual DataPort type: text)"
+        Item_Number_LifeCycle_Phase:
+          type: "string"
+          description: "Item_Number_LifeCycle_Phase (Virtual DataPort type: text)"
+        PIDNRK_LifeCycle_Phase:
+          type: "string"
+          description: "PIDNRK_LifeCycle_Phase (Virtual DataPort type: text)"
+        PrjCode:
+          type: "string"
+          description: "專案代碼，記錄相關的專案標識碼。 (Virtual DataPort type: text)"
+        CO_MATNR_CAT:
+          type: "string"
+          description: "零組件的材料分類 (Virtual DataPort type: text)"
+        ZZMCATG_M:
+          type: "string"
+          description: "零件資訊的分類層級 3，用於零件分類的分組。 (Virtual DataPort type: text)"
+        ZZMCATG_S:
+          type: "string"
+          description: "零件資訊的分類層級 4，細化零件的分類。 (Virtual DataPort type: text)"
+        STRA_LV1:
+          type: "string"
+          description: "代表策略層級1，用於高階分類或管理用途。 (Virtual DataPort type: text)"
+        STRA_LV2:
+          type: "string"
+          description: "代表策略層級2，用於細分分類或進一步管理。 (Virtual DataPort type: text)"
+        CATE_M_NAME:
+          type: "string"
+          description: "零件分類名稱，提供主要分類的名稱描述。 (Virtual DataPort type: text)"
+        CATE_S_NAME:
+          type: "string"
+          description: "產品的次分類名稱，用於標示更精細的類別層級。 (Virtual DataPort type: text)"
+        Part_Cat:
+          type: "string"
+          description: "零件分類，記錄零件的類別或類型。 (Virtual DataPort type: text)"
+        EAIPG:
+          type: "string"
+          description: "電子應用組別或相關分類的參數描述。 (Virtual DataPort type: text)"
+        EAIPD:
+          type: "string"
+          description: "電子應用或內部標識的參數描述。 (Virtual DataPort type: text)"
+      description: "Schema of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce\
+        \ as required by POST requests"
+      xml:
+        name: "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_put_def:
+      properties:
+        Item_Number:
+          type: "string"
+          description: "Virtual DataPort type: text"
+        Item_Number_ID:
+          type: "string"
+          description: "Item_Number_ID (Virtual DataPort type: text)"
+        Item_Number_Part_Cat:
+          type: "string"
+          description: "Parent Item part category (Virtual DataPort type: text)"
+        STUFE:
+          type: "string"
+          description: "Level of BOM (Virtual DataPort type: text)"
+        IDNRK:
+          type: "string"
+          description: "Component item number (Virtual DataPort type: text)"
+        IDNRK_Part_Cat:
+          type: "string"
+          description: "Component item number part category (Virtual DataPort type:\
+            \ text)"
+        PIDNRK:
+          type: "string"
+          description: "Semi-Product item number (Virtual DataPort type: text)"
+        PIDNRK_Part_Cat:
+          type: "string"
+          description: "Semi-Product item number part category (Virtual DataPort type:\
+            \ text)"
+        LifeCycle_Phase:
+          type: "string"
+          description: "Component lifecycle phase (Virtual DataPort type: text)"
+        Description:
+          type: "string"
+          description: "Component description (Virtual DataPort type: text)"
+        REV_Number:
+          type: "string"
+          description: "Component rev number (Virtual DataPort type: text)"
+        ESTIMATE_GREEN_STATUS:
+          type: "string"
+          description: "estimate Green Status (Virtual DataPort type: text)"
+        Request_for_Plant:
+          type: "string"
+          description: "Request for plant (Virtual DataPort type: text)"
+        LTB_Date:
+          type: "string"
+          description: "Last Time Buy (Virtual DataPort type: timestamp, format: yyyy-MM-ddTHH:mm:ss.SSS)"
+        Product_Owner:
+          type: "string"
+          description: "Product Owner (Virtual DataPort type: text)"
+        Model_Name:
+          type: "string"
+          description: "Model name (Virtual DataPort type: text)"
+        OEM_ODM_Type:
+          type: "string"
+          description: "OEM ODM Type (Virtual DataPort type: text)"
+        FIND_NUMBER:
+          type: "string"
+          description: "Find Number (Virtual DataPort type: text)"
+        QTY:
+          type: "string"
+          description: "Quantity (Virtual DataPort type: text)"
+        IDNRK_LOCATION:
+          type: "string"
+          description: "Component Location (Virtual DataPort type: text)"
+        PCB_MATNR:
+          type: "string"
+          description: "PCB_MATNR (Virtual DataPort type: text)"
+        Item_Number_LifeCycle_Phase:
+          type: "string"
+          description: "Item_Number_LifeCycle_Phase (Virtual DataPort type: text)"
+        PIDNRK_LifeCycle_Phase:
+          type: "string"
+          description: "PIDNRK_LifeCycle_Phase (Virtual DataPort type: text)"
+        PrjCode:
+          type: "string"
+          description: "專案代碼，記錄相關的專案標識碼。 (Virtual DataPort type: text)"
+        CO_MATNR_CAT:
+          type: "string"
+          description: "零組件的材料分類 (Virtual DataPort type: text)"
+        ZZMCATG_M:
+          type: "string"
+          description: "零件資訊的分類層級 3，用於零件分類的分組。 (Virtual DataPort type: text)"
+        ZZMCATG_S:
+          type: "string"
+          description: "零件資訊的分類層級 4，細化零件的分類。 (Virtual DataPort type: text)"
+        STRA_LV1:
+          type: "string"
+          description: "代表策略層級1，用於高階分類或管理用途。 (Virtual DataPort type: text)"
+        STRA_LV2:
+          type: "string"
+          description: "代表策略層級2，用於細分分類或進一步管理。 (Virtual DataPort type: text)"
+        CATE_M_NAME:
+          type: "string"
+          description: "零件分類名稱，提供主要分類的名稱描述。 (Virtual DataPort type: text)"
+        CATE_S_NAME:
+          type: "string"
+          description: "產品的次分類名稱，用於標示更精細的類別層級。 (Virtual DataPort type: text)"
+        Part_Cat:
+          type: "string"
+          description: "零件分類，記錄零件的類別或類型。 (Virtual DataPort type: text)"
+        EAIPG:
+          type: "string"
+          description: "電子應用組別或相關分類的參數描述。 (Virtual DataPort type: text)"
+        EAIPD:
+          type: "string"
+          description: "電子應用或內部標識的參數描述。 (Virtual DataPort type: text)"
+      description: "Schema of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce\
+        \ as required by PUT requests"
+      xml:
+        name: "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_simplified_def:
+      properties:
+        Item_Number:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Item_Number_ID:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Item_Number_Part_Cat:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        STUFE:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        IDNRK:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        IDNRK_Part_Cat:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        PIDNRK:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        PIDNRK_Part_Cat:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        LifeCycle_Phase:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Description:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        REV_Number:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        ESTIMATE_GREEN_STATUS:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Request_for_Plant:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        LTB_Date:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Product_Owner:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Model_Name:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        OEM_ODM_Type:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        FIND_NUMBER:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        QTY:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        IDNRK_LOCATION:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        PCB_MATNR:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Item_Number_LifeCycle_Phase:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        PIDNRK_LifeCycle_Phase:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        PrjCode:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        CO_MATNR_CAT:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        ZZMCATG_M:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        ZZMCATG_S:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        STRA_LV1:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        STRA_LV2:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        CATE_M_NAME:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        CATE_S_NAME:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        Part_Cat:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        EAIPG:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+        EAIPD:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              description: "The type of the field"
+      description: "Schema of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      xml:
+        name: "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+        namespace: "http://www.denodo.com/restful/dx_ce/views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_xsd_def:
+      properties:
+        denodo:
+          type: "string"
+          description: "Denodo namespace: http://www.denodo.com/restful"
+          xml:
+            attribute: true
+        atom:
+          type: "string"
+          description: "Atom namespace: http://www.w3.org/2005/Atom"
+          xml:
+            attribute: true
+        attributeFormDefault:
+          type: "string"
+          description: "The form for attributes declared in the target namespace of\
+            \ this schema: unqualified"
+          xml:
+            attribute: true
+        elementFormDefault:
+          type: "string"
+          description: "The form for elements declared in the target namespace of\
+            \ this schema: qualified"
+          xml:
+            attribute: true
+        targetNamespace:
+          type: "string"
+          description: "Namespace defined by this XSD: http://www.denodo.com/restful"
+          xml:
+            attribute: true
+        import:
+          type: "object"
+          properties:
+            schemaLocation:
+              type: "string"
+              description: "Schema's location: $xsd-view-def"
+              xml:
+                attribute: true
+            namespace:
+              type: "string"
+              description: "Schema's target namespace: http://www.denodo.com/restful/dx_ce/views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+              xml:
+                attribute: true
+          description: "Import for schema $xsd-view-def"
+        element:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              description: "View element"
+              xml:
+                attribute: true
+            complexType:
+              type: "object"
+              properties:
+                sequence:
+                  type: "object"
+                  properties:
+                    viewLink:
+                      type: "object"
+                      properties:
+                        xmlns:q1:
+                          type: "string"
+                          description: "http://www.denodo.com/restful/dx_ce/views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+                          xml:
+                            attribute: true
+                        maxOccurs:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                        ref:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    atomlink:
+                      type: "object"
+                      properties:
+                        maxOccurs:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                        ref:
+                          type: "string"
+                          description: "string"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                attribute:
+                  type: "object"
+                  properties:
+                    name:
+                      type: "string"
+                      description: "iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+                      xml:
+                        attribute: true
+                    type:
+                      type: "string"
+                      description: "string"
+                      xml:
+                        attribute: true
+                    use:
+                      type: "string"
+                      description: "string"
+                      xml:
+                        attribute: true
+                  description: "Name of the view: iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+      description: "Schema of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce\
+        \ in XSD format"
+      xml:
+        name: "schema"
+        namespace: "http://www.w3.org/2001/XMLSchema"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_xsd_view_def:
+      properties:
+        denodo:
+          type: "string"
+          description: "Denodo namespace: http://www.denodo.com/restful"
+          xml:
+            attribute: true
+        atom:
+          type: "string"
+          description: "Atom namespace: http://www.w3.org/2005/Atom"
+          xml:
+            attribute: true
+        attributeFormDefault:
+          type: "string"
+          description: "The form for attributes declared in the target namespace of\
+            \ this schema: unqualified"
+          xml:
+            attribute: true
+        elementFormDefault:
+          type: "string"
+          description: "The form for elements declared in the target namespace of\
+            \ this schema: qualified"
+          xml:
+            attribute: true
+        targetNamespace:
+          type: "string"
+          description: "Namespace defined by this XSD: http://www.denodo.com/restful/dx_ce/views/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+          xml:
+            attribute: true
+        import:
+          type: "object"
+          properties:
+            schemaLocation:
+              type: "string"
+              description: "Schema's location: atom.xsd"
+              xml:
+                attribute: true
+            namespace:
+              type: "string"
+              description: "Schema's target namespace: http://www.w3.org/2005/Atom"
+              xml:
+                attribute: true
+          description: "Import for schema atom.xsd"
+        element:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              description: "Names of the view: iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce"
+              xml:
+                attribute: true
+            complexType:
+              type: "object"
+              properties:
+                sequence:
+                  type: "object"
+                  properties:
+                    Item_Number:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Item_Number_ID:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Item_Number_Part_Cat:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    STUFE:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    IDNRK:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    IDNRK_Part_Cat:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    PIDNRK:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    PIDNRK_Part_Cat:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    LifeCycle_Phase:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Description:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    REV_Number:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    ESTIMATE_GREEN_STATUS:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Request_for_Plant:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    LTB_Date:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: timestamp, format:\
+                            \ yyyy-MM-ddTHH:mm:ss.SSS"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Product_Owner:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Model_Name:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    OEM_ODM_Type:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    FIND_NUMBER:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    QTY:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    IDNRK_LOCATION:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    PCB_MATNR:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Item_Number_LifeCycle_Phase:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    PIDNRK_LifeCycle_Phase:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    PrjCode:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    CO_MATNR_CAT:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    ZZMCATG_M:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    ZZMCATG_S:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    STRA_LV1:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    STRA_LV2:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    CATE_M_NAME:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    CATE_S_NAME:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    Part_Cat:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    EAIPG:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    EAIPD:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        type:
+                          type: "string"
+                          description: "Virtual DataPort type: text"
+                          xml:
+                            attribute: true
+                        nillable:
+                          type: "boolean"
+                          xml:
+                            attribute: true
+                      xml:
+                        name: "element"
+                    element:
+                      type: "object"
+                      properties:
+                        maxOccurs:
+                          type: "string"
+                          xml:
+                            attribute: true
+                        xmlns:q1:
+                          type: "string"
+                          description: "http://www.w3.org/2005/Atom"
+                          xml:
+                            attribute: true
+                        ref:
+                          type: "string"
+                          description: "q1:link"
+                          xml:
+                            attribute: true
+      description: "Schema of view iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce\
+        \ in XSD format"
+      xml:
+        name: "schema"
+        namespace: "http://www.w3.org/2001/XMLSchema"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_response_def:
+      properties:
+        name:
+          type: "string"
+          description: "Virtual DataPort view name"
+          xml:
+            attribute: true
+        description:
+          type: "string"
+          description: "Virtual DataPort view description"
+          xml:
+            attribute: true
+        elements:
+          type: "array"
+          description: "Results returned by the query"
+          items:
+            $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_def"
+        links:
+          type: "array"
+          description: "Links available for the current element (e.g. pagination links)"
+          items:
+            $ref: "#/components/schemas/links_def"
+        __errors__:
+          type: "array"
+          xml:
+            name: "__errors__"
+            wrapped: true
+          items:
+            $ref: "#/components/schemas/errors_def"
+        __info__:
+          type: "array"
+          xml:
+            name: "__info__"
+            wrapped: true
+          items:
+            $ref: "#/components/schemas/info_def"
+      xml:
+        name: "view"
+        namespace: "http://www.denodo.com/restful"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_schema_def:
+      properties:
+        name:
+          type: "string"
+          description: "Virtual DataPort view name"
+        properties:
+          $ref: "#/components/schemas/iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_element_simplified_def"
+    iv_plm_zall_level_where_used_refdes_asis_u_iv_allparts_info_for_ce_metadata_def:
+      properties:
+        name:
+          type: "string"
+          description: "Virtual DataPort database name"
+          xml:
+            attribute: true
+        description:
+          type: "string"
+          description: "Virtual DataPort database description"
+          xml:
+            attribute: true
+        views-metadata:
+          maxItems: 1
+          minItems: 1
+          type: "array"
+          items:
+            required:
+            - "links"
+            - "name"
+            type: "object"
+            properties:
+              name:
+                type: "string"
+                description: "Virtual DataPort view name"
+                xml:
+                  attribute: true
+              links:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/links_def"
+            xml:
+              name: "view-metadata"
+      xml:
+        name: "db"
+        namespace: "http://www.denodo.com/restful"
+  parameters:
+    format_parameter:
+      name: "$format"
+      in: "query"
+      description: "Defines the output format of the query"
+      schema:
+        type: "string"
+        default: "JSON"
+        enum:
+        - "XML"
+        - "JSON"
+    filter_parameter:
+      name: "$filter"
+      in: "query"
+      description: "Filters the rows of a view using any condition. Any expression\
+        \ that can appear in the WHERE clause of a VQL query can be used."
+      schema:
+        type: "string"
+    select_parameter:
+      name: "$select"
+      in: "query"
+      description: "Comma-separated list of fields to be returned in the result"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    group_by_parameter:
+      name: "$groupby"
+      in: "query"
+      description: "Comma-separated list of fields to group by with"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    having_parameter:
+      name: "$having"
+      in: "query"
+      description: "Comma-separated list of fields to add to the HAVING clause of\
+        \ the query"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    order_by_parameter:
+      name: "$orderby"
+      in: "query"
+      description: "Sorts the results by one or more fields. It is a comma-separated\
+        \ list of fields, each one followed by the modifier ASC (for ascending order)\
+        \ and DESC (for descending order)."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    expand_parameter:
+      name: "$expand"
+      in: "query"
+      description: "Roles to expand in the query"
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    start_index_parameter:
+      name: "$start_index"
+      in: "query"
+      description: "Used for pagination in view resources"
+      schema:
+        minimum: 0
+        type: "integer"
+        format: "int32"
+    count_parameter:
+      name: "$count"
+      in: "query"
+      description: "Used for pagination in view resources"
+      schema:
+        minimum: 0
+        type: "integer"
+        format: "int32"
+    jsoncallback_parameter:
+      name: "$jsoncallback"
+      in: "query"
+      description: "The JSON representation can return the data of a view prefixed\
+        \ with the name of a function. This is called JSON with padding or JSONP.\
+        \ That way, when a browser receives the response, it receives a script rather\
+        \ than data."
+      schema:
+        type: "string"
+    display_restful_references_parameter:
+      name: "$displayRESTfulReferences"
+      in: "query"
+      description: "By default, the result of requesting a view contains, in each\
+        \ row, a link to the row itself and, for each association of the view, a link\
+        \ to traverse the association. By using this parameter, you can configure\
+        \ this behavior."
+      schema:
+        type: "boolean"
+        default: true
+    noescape_html_parameter:
+      name: "$noescapehtml"
+      in: "query"
+      description: "List of comma-separated fields whose values will not be HTML escaped."
+      style: "form"
+      explode: false
+      schema:
+        type: "array"
+        items:
+          type: "string"
+    user_agent_header_parameter:
+      name: "User-agent"
+      in: "header"
+      description: "By including this header, communication between the web service\
+        \ and the Virtual DataPort will be configured with this value."
+      schema:
+        type: "string"
+    infrastructure_provider_header_parameter:
+      name: "Infrastructure-provider"
+      in: "header"
+      description: "By including this header, the hosting type of the client can be\
+        \ specified."
+      schema:
+        type: "string"
+    infrastructure_region_header_parameter:
+      name: "Infrastructure-region"
+      in: "header"
+      description: "By including this header, the region of the client can be specified."
+      schema:
+        type: "string"
+  securitySchemes:
+    Basic:
+      type: "http"
+      description: "HTTP basic"
+      scheme: "basic"

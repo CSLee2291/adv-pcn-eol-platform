@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.turbo/
+
+# Environment files
+.env
+.env.local
+.env.staging
+.env.production
+
+# Database
+*.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Uploads (local dev)
+uploads/
+
+# Test reports (generated)
+reports/*.json
+reports/*.md
+!reports/.gitkeep
+
+# Prisma (keep migrations tracked, exclude local DBs)
+apps/api/prisma/*.db
+
+# Coverage
+coverage/
+
+# Screenshots (dev/test artifacts)
+screenshots/
+
+# Playwright
+.playwright-mcp/

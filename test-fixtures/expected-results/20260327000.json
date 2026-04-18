@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "20260327000",
+  "vendorName": "Texas Instruments",
+  "notificationSource": "EMAIL_UPLOAD",
+  "expected": {
+    "riskLevel": "LOW",
+    "formChanged": false,
+    "fitChanged": false,
+    "functionChanged": false,
+    "affectedPartsCount": 160
+  },
+  "tolerance": {
+    "affectedPartsCount": 16
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}

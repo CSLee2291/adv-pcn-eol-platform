@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "20260330006.3",
+  "vendorName": "Texas Instruments",
+  "notificationSource": "MANUAL_UPLOAD",
+  "expected": {
+    "riskLevel": "CRITICAL",
+    "formChanged": false,
+    "fitChanged": false,
+    "functionChanged": false,
+    "affectedPartsCount": 77
+  },
+  "tolerance": {
+    "affectedPartsCount": 8
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}

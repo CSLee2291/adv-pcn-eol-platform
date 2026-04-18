@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "FPCN27274X",
+  "vendorName": "onsemi",
+  "notificationSource": "EMAIL_UPLOAD",
+  "expected": {
+    "riskLevel": "MEDIUM",
+    "formChanged": true,
+    "fitChanged": true,
+    "functionChanged": false,
+    "affectedPartsCount": 26
+  },
+  "tolerance": {
+    "affectedPartsCount": 5
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}

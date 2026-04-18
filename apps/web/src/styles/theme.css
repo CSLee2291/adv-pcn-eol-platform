@@ -1,0 +1,52 @@
+@layer base {
+  :root {
+    /* Surface */
+    --surface-page: #F8F9FB;
+    --surface-window: #FFFFFF;
+    --surface-sidebar: #F1F3F5;
+    --surface-card: #FFFFFF;
+    --surface-divider: #E9ECF1;
+
+    /* Text */
+    --text-primary: #171B22;
+    --text-secondary: #5E6775;
+    --text-muted: #7C8695;
+
+    /* Shadows */
+    --shadow-window: 0 24px 80px rgba(15,18,22,0.10), 0 8px 24px rgba(15,18,22,0.06);
+    --shadow-card: 0 6px 20px rgba(15,18,22,0.04);
+
+    /* Focus Ring */
+    --ring-focus: #BFDBFE;
+
+    /* Controls */
+    --tab-active: #171B22;
+    --nav-selected-bg: #F1F3F5;
+    --input-bg: #FFFFFF;
+    --badge-bg: #171B22;
+    --badge-text: #FFFFFF;
+  }
+
+  .dark {
+    --surface-page: #171B22;
+    --surface-window: #171B22;
+    --surface-sidebar: #2A3039;
+    --surface-card: #2A3039;
+    --surface-divider: #434955;
+
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+
+    --shadow-window: 0 24px 80px rgba(0,0,0,0.45), 0 8px 24px rgba(0,0,0,0.25);
+    --shadow-card: 0 8px 24px rgba(0,0,0,0.18);
+
+    --ring-focus: #60A5FA;
+
+    --tab-active: #F8FAFC;
+    --nav-selected-bg: rgba(255,255,255,0.06);
+    --input-bg: rgba(255,255,255,0.04);
+    --badge-bg: #F8FAFC;
+    --badge-text: #171B22;
+  }
+}

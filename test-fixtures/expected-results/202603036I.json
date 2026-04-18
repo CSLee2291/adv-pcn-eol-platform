@@ -1,0 +1,17 @@
+{
+  "pcnNumber": "202603036I",
+  "vendorName": "NXP",
+  "notificationSource": "EMAIL_UPLOAD",
+  "expected": {
+    "riskLevel": "HIGH",
+    "formChanged": false,
+    "fitChanged": false,
+    "functionChanged": true,
+    "affectedPartsCount": 1
+  },
+  "tolerance": {
+    "affectedPartsCount": 5
+  },
+  "verifiedAt": "2026-04-04",
+  "verifiedBy": "CE automation test run V2.0"
+}
