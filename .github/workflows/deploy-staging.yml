@@ -37,43 +37,44 @@ jobs:
           DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
         run: pnpm --filter api exec prisma migrate deploy
 
-      - name: Prepare deploy package
-        run: |
-          cd apps/api
-          mkdir -p deploy/dist deploy/prisma deploy/node_modules
-          cp -r dist/* deploy/dist/
-          cp -r prisma/schema.prisma deploy/prisma/
-          cp package.json deploy/
-          # Install production dependencies in deploy folder
-          cd deploy
-          cat > package.json << 'PKGJSON'
-          {
-            "name": "pcn-eol-api",
-            "version": "0.1.0",
-            "type": "module",
-            "scripts": { "start": "node dist/app.js" },
-            "engines": { "node": ">=22" }
-          }
-          PKGJSON
-          npm init -y > /dev/null 2>&1 || true
-          # Copy needed node_modules from parent
-          cd $GITHUB_WORKSPACE
-          cp -r node_modules apps/api/deploy/node_modules 2>/dev/null || true
-
-      - name: Zip and Deploy to Azure
+      - name: Prepare and deploy
         env:
           DEPLOY_USER: ${{ secrets.AZURE_DEPLOY_USER }}
           DEPLOY_PASS: ${{ secrets.AZURE_DEPLOY_PASS }}
         run: |
-          cd apps/api/deploy
-          zip -r -q ../deploy.zip .
-          cd ..
-          curl -s -X POST \
+          # Create a standalone deploy directory
+          mkdir -p /tmp/deploy
+
+          # Copy built app
+          cp -r apps/api/dist /tmp/deploy/dist
+          cp -r apps/api/prisma /tmp/deploy/prisma
+          cp apps/api/package.json /tmp/deploy/package.json
+
+          # Copy the monorepo node_modules (includes all deps)
+          cp -r node_modules /tmp/deploy/node_modules
+
+          # Copy shared packages
+          mkdir -p /tmp/deploy/packages
+          cp -r packages /tmp/deploy/packages
+
+          # Zip and deploy
+          cd /tmp/deploy
+          zip -r -q /tmp/deploy.zip . -x "node_modules/.cache/*"
+          echo "Deploy package size: $(du -sh /tmp/deploy.zip | cut -f1)"
+
+          # Zip Deploy to Azure
+          HTTP_CODE=$(curl -s -o /tmp/deploy_response.txt -w "%{http_code}" \
+            -X POST \
             -u "${DEPLOY_USER}:${DEPLOY_PASS}" \
-            --data-binary @deploy.zip \
+            --data-binary @/tmp/deploy.zip \
             -H "Content-Type: application/zip" \
-            "https://pcn-eol-api-staging.scm.azurewebsites.net/api/zipdeploy" \
-            -w "\nHTTP Status: %{http_code}\n"
+            "https://pcn-eol-api-staging.scm.azurewebsites.net/api/zipdeploy?isAsync=true")
+          echo "Deploy HTTP status: $HTTP_CODE"
+          cat /tmp/deploy_response.txt || true
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "Deployment failed!"
+            exit 1
+          fi
 
   deploy-web:
     name: Deploy Frontend to Azure Static Web Apps
