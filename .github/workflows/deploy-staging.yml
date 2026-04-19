@@ -81,16 +81,15 @@ jobs:
           zip -r -q ../deploy.zip .
 
       - name: Deploy to Azure App Service
-        env:
-          DEPLOY_USER: ${{ secrets.AZURE_DEPLOY_USER }}
-          DEPLOY_PASS: ${{ secrets.AZURE_DEPLOY_PASS }}
         run: |
           echo "Deploying $(du -sh apps/api/deploy.zip | cut -f1) package..."
+          # Base64 encode credentials to avoid shell escaping issues
+          AUTH=$(echo -n '${{ secrets.AZURE_DEPLOY_USER }}:${{ secrets.AZURE_DEPLOY_PASS }}' | base64)
           HTTP_CODE=$(curl -s -o /tmp/deploy_out.txt -w "%{http_code}" \
             -X POST \
-            -u "${DEPLOY_USER}:${DEPLOY_PASS}" \
-            --data-binary @apps/api/deploy.zip \
+            -H "Authorization: Basic ${AUTH}" \
             -H "Content-Type: application/zip" \
+            --data-binary @apps/api/deploy.zip \
             "https://pcn-eol-api-staging.scm.azurewebsites.net/api/zipdeploy")
           echo "HTTP Status: $HTTP_CODE"
           if [ "$HTTP_CODE" -ge 400 ]; then
