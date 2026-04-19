@@ -4,6 +4,7 @@ import { env } from "../../config/env.js";
 import { logger } from "../../config/logger.js";
 import { PCN_SUMMARY_SYSTEM_PROMPT, PCN_ANALYSIS_USER_PROMPT } from "./prompt-templates/pcn-summary.js";
 import { aiResponseSchema } from "./ai.types.js";
+import { AiFeedbackService } from "./ai-feedback.service.js";
 
 export interface IAiService {
   analyzePcn(eventId: string): Promise<any>;
@@ -41,8 +42,26 @@ class RealAiService implements IAiService {
       ? event.rawText.slice(0, MAX_TEXT_LENGTH) + "\n\n[... truncated for analysis ...]"
       : event.rawText;
 
+    // Build few-shot examples from CE corrections (if any exist for this vendor)
+    let fewShotExamples: string | undefined;
+    try {
+      const feedbackService = new AiFeedbackService();
+      const examples = await feedbackService.getFewShotExamples(event.vendorName, undefined, 3);
+      if (examples.length > 0) {
+        fewShotExamples = examples.map((ex) => {
+          const corrections = ex.corrections.map((c: any) =>
+            `  - Field "${c.field}": AI said ${JSON.stringify(c.aiSaid)} → CE corrected to ${JSON.stringify(c.ceCorrectedTo)}${c.reason ? ` (Reason: ${c.reason})` : ""}`
+          ).join("\n");
+          return `PCN ${ex.pcnNumber} (${ex.vendor}):\n${corrections}`;
+        }).join("\n\n");
+        logger.info({ eventId, examples: examples.length }, "Injecting few-shot CE correction examples");
+      }
+    } catch {
+      // Few-shot is optional — don't fail analysis if feedback query fails
+    }
+
     logger.info(
-      { eventId, deployment: env.AZURE_OPENAI_DEPLOYMENT, textLen: truncatedText.length },
+      { eventId, deployment: env.AZURE_OPENAI_DEPLOYMENT, textLen: truncatedText.length, hasFewShot: !!fewShotExamples },
       "Calling Azure OpenAI for PCN analysis"
     );
 
@@ -50,7 +69,7 @@ class RealAiService implements IAiService {
       model: env.AZURE_OPENAI_DEPLOYMENT,
       messages: [
         { role: "system", content: PCN_SUMMARY_SYSTEM_PROMPT },
-        { role: "user", content: PCN_ANALYSIS_USER_PROMPT(truncatedText) },
+        { role: "user", content: PCN_ANALYSIS_USER_PROMPT(truncatedText, fewShotExamples) },
       ],
       response_format: { type: "json_object" },
       temperature: 0.1,
@@ -133,7 +152,7 @@ Risk Reason: ${texts.riskReason}`;
         riskReason: data.riskReason,
         affectedParts: data.affectedParts,
         aiModelVersion: env.AZURE_OPENAI_DEPLOYMENT,
-        confidence: 0.85,
+        confidence: data.confidenceScore ? data.confidenceScore / 100 : 0.85,
         rawAiResponse: data,
       },
       update: {

@@ -190,6 +190,16 @@ export const runAllReadyInBatch = (batchId: string) => api.post(`${vr}/batches/$
 export const rerunVerificationBatch = (batchId: string) => api.post(`${vr}/batches/${batchId}/rerun`).then((r) => r.data.data);
 export const fetchVerificationHistory = () => api.get(`${vr}/history`).then((r) => r.data.data);
 
+// AI Feedback
+export const submitAiFeedback = (data: { pcnEventId: string; assessorName: string; corrections: any[] }) =>
+  api.post("/ai/feedback", data).then((r) => r.data.data);
+export const fetchAiFeedback = (eventId: string) =>
+  api.get(`/ai/feedback/${eventId}`).then((r) => r.data.data);
+export const fetchAiFeedbackStats = () =>
+  api.get("/ai/feedback-stats").then((r) => r.data.data);
+export const importFeedbackFromAssessments = () =>
+  api.post("/ai/feedback/import-assessments").then((r) => r.data.data);
+
 // RD Verification
 const rd = "/rd-verification";
 export const suggestRd = (assessmentId: string) => api.get(`${rd}/suggest/${assessmentId}`).then((r) => r.data.data);

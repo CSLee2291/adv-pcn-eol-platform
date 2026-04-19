@@ -13,9 +13,12 @@ For risk assessment:
 - MEDIUM: Form or Fit change only, no function impact
 - HIGH: Function change OR major form change (e.g., package type change)
 - CRITICAL: EOL/discontinuation OR multiple F/F/F changes
+
+Also provide a confidence score (0-100) indicating how certain you are about your analysis,
+with breakdown by category: text quality, MPN extraction, F/F/F classification, and risk assessment.
 `;
 
-export const PCN_ANALYSIS_USER_PROMPT = (rawText: string) => `
+export const PCN_ANALYSIS_USER_PROMPT = (rawText: string, fewShotExamples?: string) => `
 Analyze the following PCN document text and provide:
 
 1. **Summary**: A concise 2-3 sentence summary of the change.
@@ -35,7 +38,18 @@ Analyze the following PCN document text and provide:
 5. **PCN Type**: PCN / EOL / PDN / OTHER
 6. **Effective Date**: Extract the effective/implementation date if mentioned.
 7. **Recommended Actions**: List 1-3 recommended next steps for the CE.
+8. **Confidence Score**: Rate your confidence (0-100) for the overall analysis, with sub-scores for:
+   - textQuality: How complete and readable was the input text?
+   - mpnExtraction: How confident are you that ALL MPNs were correctly extracted?
+   - fffClassification: How confident are you in the Form/Fit/Function classification?
+   - riskAssessment: How confident are you in the risk level assignment?
+${fewShotExamples ? `
+## Learning from CE Corrections
+The following are real corrections made by CE engineers on similar PCNs from this vendor.
+Please take these into account — they reflect domain knowledge that may not be obvious from the document alone:
 
+${fewShotExamples}
+` : ""}
 PCN Document:
 ---
 ${rawText}
@@ -53,6 +67,13 @@ Respond in the following JSON format:
   "riskReason": "string",
   "pcnType": "PCN|EOL|PDN|OTHER",
   "effectiveDate": "string|null",
-  "recommendedActions": ["string"]
+  "recommendedActions": ["string"],
+  "confidenceScore": number,
+  "confidenceFactors": {
+    "textQuality": number,
+    "mpnExtraction": number,
+    "fffClassification": number,
+    "riskAssessment": number
+  }
 }
 `;

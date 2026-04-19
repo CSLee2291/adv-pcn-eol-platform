@@ -45,6 +45,8 @@ import {
   streamWhereUsedQuery,
   exportExcelFromCache,
   createCeAssessment,
+  submitAiFeedback,
+  fetchAiFeedback,
   suggestRd,
   createRdTask,
   fetchRdTasks as fetchRdTasksApi,
@@ -216,6 +218,14 @@ export function PCNDetail() {
   const [assessmentSuccess, setAssessmentSuccess] = useState("");
   const [exporting, setExporting] = useState(false);
 
+  // AI Correction state
+  const [correctionMode, setCorrectionMode] = useState(false);
+  const [correctionForm, setCorrectionForm] = useState<{
+    riskLevel: string; formChanged: boolean; fitChanged: boolean; functionChanged: boolean; summary: string; assessorName: string;
+  } | null>(null);
+  const [correctionSaving, setCorrectionSaving] = useState(false);
+  const [correctionHistory, setCorrectionHistory] = useState<any[]>([]);
+
   // RD Verification state
   const [rdTasks, setRdTasks] = useState<any[]>([]);
   const [rdSuggestions, setRdSuggestions] = useState<any[]>([]);
@@ -248,6 +258,59 @@ export function PCNDetail() {
       console.error("Translation failed:", err);
     } finally {
       setTranslating(false);
+    }
+  };
+
+  const startCorrectionMode = () => {
+    if (!ai) return;
+    setCorrectionForm({
+      riskLevel: ai.riskLevel,
+      formChanged: ai.formChanged,
+      fitChanged: ai.fitChanged,
+      functionChanged: ai.functionChanged,
+      summary: ai.summary,
+      assessorName: "",
+    });
+    setCorrectionMode(true);
+    // Load correction history
+    if (id) fetchAiFeedback(id).then(setCorrectionHistory).catch(console.error);
+  };
+
+  const handleSaveCorrections = async () => {
+    if (!id || !ai || !correctionForm || !correctionForm.assessorName) return;
+    setCorrectionSaving(true);
+    try {
+      const corrections: any[] = [];
+      if (correctionForm.riskLevel !== ai.riskLevel) {
+        corrections.push({ field: "riskLevel", originalValue: ai.riskLevel, correctedValue: correctionForm.riskLevel });
+      }
+      if (correctionForm.formChanged !== ai.formChanged) {
+        corrections.push({ field: "formChanged", originalValue: ai.formChanged, correctedValue: correctionForm.formChanged });
+      }
+      if (correctionForm.fitChanged !== ai.fitChanged) {
+        corrections.push({ field: "fitChanged", originalValue: ai.fitChanged, correctedValue: correctionForm.fitChanged });
+      }
+      if (correctionForm.functionChanged !== ai.functionChanged) {
+        corrections.push({ field: "functionChanged", originalValue: ai.functionChanged, correctedValue: correctionForm.functionChanged });
+      }
+      if (correctionForm.summary !== ai.summary) {
+        corrections.push({ field: "summary", originalValue: ai.summary, correctedValue: correctionForm.summary });
+      }
+      if (corrections.length === 0) {
+        setCorrectionMode(false);
+        return;
+      }
+      await submitAiFeedback({ pcnEventId: id, assessorName: correctionForm.assessorName, corrections });
+      setCorrectionMode(false);
+      setCorrectionForm(null);
+      // Reload event to get updated confidence
+      const updated = await fetchEvent(id);
+      setEvent(updated);
+      fetchAiFeedback(id).then(setCorrectionHistory).catch(console.error);
+    } catch (err) {
+      console.error("Failed to save corrections:", err);
+    } finally {
+      setCorrectionSaving(false);
     }
   };
 
@@ -858,9 +921,14 @@ export function PCNDetail() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>AI Analysis Result</CardTitle>
-                <Button variant="outline" size="sm" onClick={handleTranslate} disabled={translating}>
-                  {translating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Translating...</> : <><Languages className="h-3.5 w-3.5" /> {translation ? "Re-translate" : "Translate 繁中"}</>}
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm" onClick={handleTranslate} disabled={translating}>
+                    {translating ? <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Translating...</> : <><Languages className="h-3.5 w-3.5" /> {translation ? "Re-translate" : "Translate 繁中"}</>}
+                  </Button>
+                  <Button variant={correctionMode ? "default" : "outline"} size="sm" onClick={() => correctionMode ? setCorrectionMode(false) : startCorrectionMode()}>
+                    <Pencil className="h-3.5 w-3.5" /> {correctionMode ? "Cancel Edit" : "Correct AI"}
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -927,6 +995,65 @@ export function PCNDetail() {
                   <span>Confidence: {(ai.confidence * 100).toFixed(0)}%</span>
                   <span>Analyzed: {formatDateTime(ai.analyzedAt)}</span>
                 </div>
+
+                {/* CE Correction Mode */}
+                {correctionMode && correctionForm && (
+                  <div className="mt-4 p-4 rounded-panel border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/30 space-y-3">
+                    <p className="text-body font-medium text-amber-800 dark:text-amber-200">Correct AI Analysis</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-meta font-medium text-[var(--text-secondary)] mb-1 block">Your Name *</label>
+                        <Input placeholder="e.g., Albee.Chang" value={correctionForm.assessorName} onChange={(e) => setCorrectionForm({ ...correctionForm, assessorName: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className="text-meta font-medium text-[var(--text-secondary)] mb-1 block">Risk Level</label>
+                        <select className="w-full h-9 rounded-input border border-[var(--border)] bg-[var(--surface-window)] px-3 text-body" value={correctionForm.riskLevel} onChange={(e) => setCorrectionForm({ ...correctionForm, riskLevel: e.target.value })}>
+                          <option value="LOW">LOW</option>
+                          <option value="MEDIUM">MEDIUM</option>
+                          <option value="HIGH">HIGH</option>
+                          <option value="CRITICAL">CRITICAL</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <label className="flex items-center gap-2 text-body">
+                        <input type="checkbox" checked={correctionForm.formChanged} onChange={(e) => setCorrectionForm({ ...correctionForm, formChanged: e.target.checked })} className="h-4 w-4" />
+                        Form Changed
+                      </label>
+                      <label className="flex items-center gap-2 text-body">
+                        <input type="checkbox" checked={correctionForm.fitChanged} onChange={(e) => setCorrectionForm({ ...correctionForm, fitChanged: e.target.checked })} className="h-4 w-4" />
+                        Fit Changed
+                      </label>
+                      <label className="flex items-center gap-2 text-body">
+                        <input type="checkbox" checked={correctionForm.functionChanged} onChange={(e) => setCorrectionForm({ ...correctionForm, functionChanged: e.target.checked })} className="h-4 w-4" />
+                        Function Changed
+                      </label>
+                    </div>
+                    <div>
+                      <label className="text-meta font-medium text-[var(--text-secondary)] mb-1 block">Summary (edit if incorrect)</label>
+                      <textarea className="w-full rounded-input border border-[var(--border)] bg-[var(--surface-window)] px-3 py-2 text-body min-h-[60px]" value={correctionForm.summary} onChange={(e) => setCorrectionForm({ ...correctionForm, summary: e.target.value })} />
+                    </div>
+                    <Button onClick={handleSaveCorrections} disabled={!correctionForm.assessorName || correctionSaving}>
+                      {correctionSaving ? <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</> : <><Save className="h-4 w-4" /> Save Corrections</>}
+                    </Button>
+                  </div>
+                )}
+
+                {/* Correction History */}
+                {correctionHistory.length > 0 && (
+                  <div className="mt-3">
+                    <p className="text-meta font-medium text-[var(--text-secondary)] mb-2">CE Corrections ({correctionHistory.length})</p>
+                    <div className="space-y-1">
+                      {correctionHistory.slice(0, 5).map((c: any) => (
+                        <div key={c.id} className="flex gap-2 text-meta text-[var(--text-muted)]">
+                          <span className="font-medium">{c.assessorName}</span>
+                          <span>corrected <Badge variant="outline">{c.correctedField}</Badge></span>
+                          <span>{JSON.parse(c.originalValue)} → {JSON.parse(c.correctedValue)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ) : (

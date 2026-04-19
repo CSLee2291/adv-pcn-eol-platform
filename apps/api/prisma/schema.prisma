@@ -50,6 +50,7 @@ model PcnEventMaster {
   ceAssessments      CeAssessment[]
   notificationQueue  NotificationQueueEntry[]
   rdVerificationTasks RdVerificationTask[]
+  aiFeedbacks         AiFeedback[]
 
   @@map("pcn_event_master")
 }
@@ -88,9 +89,35 @@ model AiAnalysisResult {
   rawAiResponse     Json?    @map("raw_ai_response")
   analyzedAt        DateTime @default(now()) @map("analyzed_at")
 
-  pcnEvent PcnEventMaster @relation(fields: [pcnEventId], references: [id])
+  pcnEvent  PcnEventMaster @relation(fields: [pcnEventId], references: [id])
+  feedbacks AiFeedback[]
 
   @@map("ai_analysis_result")
+}
+
+// ===== AI Feedback — CE 修正 AI 結果紀錄 =====
+// Phase II: CE 修正 AI 判讀結果，用於 few-shot prompt 改善 + 信心分數校準
+model AiFeedback {
+  id             String   @id @default(uuid())
+  pcnEventId     String   @map("pcn_event_id")
+  aiAnalysisId   String   @map("ai_analysis_id")
+  assessorName   String   @map("assessor_name")
+
+  // What was corrected
+  correctedField String   @map("corrected_field")   // riskLevel | formChanged | fitChanged | functionChanged | affectedParts | summary
+  originalValue  String   @map("original_value")    // JSON stringified
+  correctedValue String   @map("corrected_value")   // JSON stringified
+  rationale      String?
+
+  // Metadata for grouping
+  vendorName     String?  @map("vendor_name")
+  pcnType        String?  @map("pcn_type")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  pcnEvent   PcnEventMaster   @relation(fields: [pcnEventId], references: [id])
+  aiAnalysis AiAnalysisResult @relation(fields: [aiAnalysisId], references: [id])
+
+  @@map("ai_feedback")
 }
 
 enum RiskLevel {
