@@ -37,44 +37,38 @@ jobs:
           DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
         run: pnpm --filter api exec prisma migrate deploy
 
-      - name: Prepare and deploy
-        env:
-          DEPLOY_USER: ${{ secrets.AZURE_DEPLOY_USER }}
-          DEPLOY_PASS: ${{ secrets.AZURE_DEPLOY_PASS }}
+      - name: Prepare deploy package
         run: |
-          # Create a standalone deploy directory
-          mkdir -p /tmp/deploy
+          cd apps/api
+          mkdir -p deploy
 
-          # Copy built app
-          cp -r apps/api/dist /tmp/deploy/dist
-          cp -r apps/api/prisma /tmp/deploy/prisma
-          cp apps/api/package.json /tmp/deploy/package.json
+          # Copy built app + prisma schema
+          cp -r dist deploy/
+          cp -r prisma deploy/
+          cp package.json deploy/
 
-          # Copy the monorepo node_modules (includes all deps)
-          cp -r node_modules /tmp/deploy/node_modules
+          # Install only production deps in deploy folder
+          cd deploy
+          npm install --omit=dev --ignore-scripts 2>&1 | tail -5
 
-          # Copy shared packages
-          mkdir -p /tmp/deploy/packages
-          cp -r packages /tmp/deploy/packages
+          # Also need shared packages
+          mkdir -p packages/shared
+          cp -r $GITHUB_WORKSPACE/packages/shared/* packages/shared/
 
-          # Zip and deploy
-          cd /tmp/deploy
-          zip -r -q /tmp/deploy.zip . -x "node_modules/.cache/*"
-          echo "Deploy package size: $(du -sh /tmp/deploy.zip | cut -f1)"
+          # Need @prisma/client from the generated output
+          mkdir -p node_modules/.prisma
+          cp -r $GITHUB_WORKSPACE/node_modules/.prisma/client node_modules/.prisma/client
+          cp -r $GITHUB_WORKSPACE/node_modules/@prisma node_modules/@prisma 2>/dev/null || true
 
-          # Zip Deploy to Azure
-          HTTP_CODE=$(curl -s -o /tmp/deploy_response.txt -w "%{http_code}" \
-            -X POST \
-            -u "${DEPLOY_USER}:${DEPLOY_PASS}" \
-            --data-binary @/tmp/deploy.zip \
-            -H "Content-Type: application/zip" \
-            "https://pcn-eol-api-staging.scm.azurewebsites.net/api/zipdeploy?isAsync=true")
-          echo "Deploy HTTP status: $HTTP_CODE"
-          cat /tmp/deploy_response.txt || true
-          if [ "$HTTP_CODE" -ge 400 ]; then
-            echo "Deployment failed!"
-            exit 1
-          fi
+          echo "Deploy size: $(du -sh . | cut -f1)"
+          zip -r -q ../deploy.zip .
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: pcn-eol-api-staging
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: apps/api/deploy.zip
 
   deploy-web:
     name: Deploy Frontend to Azure Static Web Apps
