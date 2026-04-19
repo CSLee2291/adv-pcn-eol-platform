@@ -45,6 +45,11 @@ import {
   streamWhereUsedQuery,
   exportExcelFromCache,
   createCeAssessment,
+  suggestRd,
+  createRdTask,
+  fetchRdTasks as fetchRdTasksApi,
+  respondRdTask,
+  remindRdTask,
   fetchCeAssessments,
   translateAnalysis,
   exportWhereUsedExcel,
@@ -211,6 +216,12 @@ export function PCNDetail() {
   const [assessmentSuccess, setAssessmentSuccess] = useState("");
   const [exporting, setExporting] = useState(false);
 
+  // RD Verification state
+  const [rdTasks, setRdTasks] = useState<any[]>([]);
+  const [rdSuggestions, setRdSuggestions] = useState<any[]>([]);
+  const [rdAssigning, setRdAssigning] = useState(false);
+  const [rdForm, setRdForm] = useState({ assignedRdName: "", assignedRdEmail: "", priority: "NORMAL", assignedBy: "" });
+
   // Edit mode state
   const [editing, setEditing] = useState(false);
   const [editForm, setEditForm] = useState({ vendorName: "", pcnType: "", receivedDate: "", ceOwnerName: "" });
@@ -373,6 +384,61 @@ export function PCNDetail() {
       console.error("Failed to submit assessment:", err);
     } finally {
       setAssessmentSubmitting(false);
+    }
+  };
+
+  // RD Verification functions
+  const loadRdTasks = useCallback(async () => {
+    if (!id) return;
+    try {
+      const tasks = await fetchRdTasksApi({ pcnEventId: id });
+      setRdTasks(tasks);
+    } catch (err) {
+      console.error("Failed to load RD tasks:", err);
+    }
+  }, [id]);
+
+  const loadRdSuggestions = useCallback(async (assessmentId: string) => {
+    try {
+      const suggestions = await suggestRd(assessmentId);
+      setRdSuggestions(suggestions);
+      if (suggestions.length > 0) {
+        setRdForm((f) => ({ ...f, assignedRdName: suggestions[0].rdName, assignedRdEmail: suggestions[0].rdEmail }));
+      }
+    } catch (err) {
+      console.error("Failed to load RD suggestions:", err);
+    }
+  }, []);
+
+  const handleAssignRd = async () => {
+    if (!id || !rdForm.assignedRdName || !rdForm.assignedRdEmail || !rdForm.assignedBy || rdAssigning) return;
+    const latestAssessment = assessments[0];
+    if (!latestAssessment) return;
+    setRdAssigning(true);
+    try {
+      await createRdTask({
+        ceAssessmentId: latestAssessment.id,
+        pcnEventId: id,
+        assignedRdName: rdForm.assignedRdName,
+        assignedRdEmail: rdForm.assignedRdEmail,
+        assignedBy: rdForm.assignedBy,
+        priority: rdForm.priority,
+      });
+      setRdForm({ assignedRdName: "", assignedRdEmail: "", priority: "NORMAL", assignedBy: "" });
+      await loadRdTasks();
+    } catch (err) {
+      console.error("Failed to assign RD:", err);
+    } finally {
+      setRdAssigning(false);
+    }
+  };
+
+  const handleRdRespond = async (taskId: string, decision: string) => {
+    try {
+      await respondRdTask(taskId, { rdDecision: decision });
+      await loadRdTasks();
+    } catch (err) {
+      console.error("Failed to respond RD task:", err);
     }
   };
 
@@ -773,6 +839,16 @@ export function PCNDetail() {
             onClick={() => loadAssessments()}
           >
             <User className="h-4 w-4" /> CE Assessment ({assessments.length})
+          </TabsTrigger>
+          <TabsTrigger
+            value="rdverification"
+            className="gap-1.5"
+            onClick={() => loadRdTasks()}
+          >
+            <ShieldCheck className="h-4 w-4" /> RD Verification
+            {rdTasks.length > 0 && (
+              <span className="ml-1 text-meta">({rdTasks.length})</span>
+            )}
           </TabsTrigger>
         </TabsList>
 
@@ -1739,6 +1815,169 @@ export function PCNDetail() {
                 </CardContent>
               </Card>
             )}
+          </div>
+        </TabsContent>
+
+        {/* ---- RD Verification Tab ---- */}
+        <TabsContent value="rdverification">
+          <div className="space-y-4">
+            {/* Existing tasks */}
+            {rdTasks.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-subtitle">Verification Tasks ({rdTasks.length})</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Assigned RD</TableHead>
+                        <TableHead>Priority</TableHead>
+                        <TableHead>Assigned By</TableHead>
+                        <TableHead>Decision</TableHead>
+                        <TableHead>Created</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {rdTasks.map((task: any) => (
+                        <TableRow key={task.id}>
+                          <TableCell>
+                            <Badge variant={
+                              task.taskStatus === "COMPLETED" ? "low" :
+                              task.taskStatus === "CANCELLED" ? "outline" :
+                              task.taskStatus === "IN_PROGRESS" ? "medium" : "high"
+                            }>
+                              {task.taskStatus}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="font-medium">{task.assignedRdName}</TableCell>
+                          <TableCell>
+                            <Badge variant={task.priority === "URGENT" ? "critical" : task.priority === "HIGH" ? "high" : "outline"}>
+                              {task.priority}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{task.assignedBy}</TableCell>
+                          <TableCell>
+                            {task.rdDecision ? (
+                              <Badge variant={task.rdDecision === "PASS" ? "low" : task.rdDecision === "FAIL" ? "high" : "medium"}>
+                                {task.rdDecision}
+                              </Badge>
+                            ) : <span className="text-[var(--text-muted)]">--</span>}
+                          </TableCell>
+                          <TableCell className="text-meta">{formatDateTime(task.createdAt)}</TableCell>
+                          <TableCell>
+                            {task.taskStatus === "PENDING" && (
+                              <div className="flex gap-1">
+                                <Button size="sm" variant="outline" onClick={() => handleRdRespond(task.id, "PASS")}>
+                                  <CheckCircle2 className="h-3 w-3" /> Pass
+                                </Button>
+                                <Button size="sm" variant="outline" onClick={() => handleRdRespond(task.id, "FAIL")}>
+                                  <XCircle className="h-3 w-3" /> Fail
+                                </Button>
+                                <Button size="sm" variant="outline" onClick={() => handleRdRespond(task.id, "CONDITIONAL")}>
+                                  Conditional
+                                </Button>
+                              </div>
+                            )}
+                            {task.taskStatus === "COMPLETED" && task.rdComments && (
+                              <span className="text-meta">{task.rdComments}</span>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Assign RD form — show when CE flagged needRdVerification */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-subtitle">Assign RD Verification</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Auto-suggestions */}
+                {assessments.length > 0 && rdSuggestions.length === 0 && (
+                  <Button variant="outline" size="sm" onClick={() => loadRdSuggestions(assessments[0].id)}>
+                    <Search className="h-3.5 w-3.5" /> Auto-Suggest RD from Product Owners
+                  </Button>
+                )}
+                {rdSuggestions.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-meta font-medium text-[var(--text-secondary)]">Suggested RD Engineers (by affected product count)</p>
+                    <div className="flex flex-wrap gap-2">
+                      {rdSuggestions.slice(0, 5).map((s: any, i: number) => (
+                        <Button
+                          key={i}
+                          variant={rdForm.assignedRdEmail === s.rdEmail ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setRdForm({ ...rdForm, assignedRdName: s.rdName, assignedRdEmail: s.rdEmail })}
+                        >
+                          {s.rdName.split("(")[0].trim()} ({s.productCount} products)
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-meta font-medium text-[var(--text-secondary)] mb-1 block">RD Engineer Name *</label>
+                    <Input
+                      placeholder="e.g., Yusuke.Yorikane"
+                      value={rdForm.assignedRdName}
+                      onChange={(e) => setRdForm({ ...rdForm, assignedRdName: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-meta font-medium text-[var(--text-secondary)] mb-1 block">RD Email *</label>
+                    <Input
+                      placeholder="e.g., yusuke.yorikane@advantech.co.jp"
+                      value={rdForm.assignedRdEmail}
+                      onChange={(e) => setRdForm({ ...rdForm, assignedRdEmail: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-meta font-medium text-[var(--text-secondary)] mb-1 block">Assigned By (Your Name) *</label>
+                    <Input
+                      placeholder="e.g., Albee.Chang"
+                      value={rdForm.assignedBy}
+                      onChange={(e) => setRdForm({ ...rdForm, assignedBy: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-meta font-medium text-[var(--text-secondary)] mb-1 block">Priority</label>
+                    <select
+                      className="w-full h-9 rounded-input border border-[var(--border)] bg-[var(--surface-window)] px-3 text-body"
+                      value={rdForm.priority}
+                      onChange={(e) => setRdForm({ ...rdForm, priority: e.target.value })}
+                    >
+                      <option value="NORMAL">Normal</option>
+                      <option value="HIGH">High</option>
+                      <option value="URGENT">Urgent</option>
+                    </select>
+                  </div>
+                </div>
+                <Button
+                  onClick={handleAssignRd}
+                  disabled={!rdForm.assignedRdName || !rdForm.assignedRdEmail || !rdForm.assignedBy || rdAssigning || assessments.length === 0}
+                >
+                  {rdAssigning ? (
+                    <><Loader2 className="h-4 w-4 animate-spin" /> Assigning...</>
+                  ) : (
+                    <><ShieldCheck className="h-4 w-4" /> Assign &amp; Notify via Teams</>
+                  )}
+                </Button>
+                {assessments.length === 0 && (
+                  <p className="text-meta text-amber-600">Submit a CE Assessment first before assigning RD verification.</p>
+                )}
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
       </Tabs>

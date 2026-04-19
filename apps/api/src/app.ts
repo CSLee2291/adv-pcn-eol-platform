@@ -12,6 +12,7 @@ import { notificationRoutes } from "./modules/notification/notification.routes.j
 import { notificationRulesRoutes } from "./modules/notifications/notification-rules.routes.js";
 import { dashboardRoutes } from "./modules/dashboard/dashboard.routes.js";
 import { verificationRoutes } from "./modules/verification/verification.routes.js";
+import { rdVerificationRoutes } from "./modules/rd-verification/rd-verification.routes.js";
 
 const app = Fastify({
   logger: {
@@ -41,6 +42,7 @@ async function start() {
   await app.register(notificationRulesRoutes, { prefix: "/api/v1/notification-rules" });
   await app.register(dashboardRoutes, { prefix: "/api/v1/dashboard" });
   await app.register(verificationRoutes, { prefix: "/api/v1/verification" });
+  await app.register(rdVerificationRoutes, { prefix: "/api/v1/rd-verification" });
 
   // Global error handler
   app.setErrorHandler((error: any, _request, reply) => {

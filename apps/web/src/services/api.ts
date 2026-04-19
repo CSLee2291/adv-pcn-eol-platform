@@ -190,4 +190,24 @@ export const runAllReadyInBatch = (batchId: string) => api.post(`${vr}/batches/$
 export const rerunVerificationBatch = (batchId: string) => api.post(`${vr}/batches/${batchId}/rerun`).then((r) => r.data.data);
 export const fetchVerificationHistory = () => api.get(`${vr}/history`).then((r) => r.data.data);
 
+// RD Verification
+const rd = "/rd-verification";
+export const suggestRd = (assessmentId: string) => api.get(`${rd}/suggest/${assessmentId}`).then((r) => r.data.data);
+export const createRdTask = (data: {
+  ceAssessmentId: string; pcnEventId: string;
+  assignedRdName: string; assignedRdEmail: string; assignedBy: string;
+  priority?: string; dueDate?: string;
+}) => api.post(`${rd}/create`, data).then((r) => r.data.data);
+export const fetchRdTasks = (filters?: Record<string, string>) => api.get(`${rd}/tasks`, { params: filters }).then((r) => r.data.data);
+export const fetchRdTask = (id: string) => api.get(`${rd}/tasks/${id}`).then((r) => r.data.data);
+export const respondRdTask = (id: string, data: { rdDecision: string; rdComments?: string }) =>
+  api.post(`${rd}/tasks/${id}/respond`, data).then((r) => r.data.data);
+export const remindRdTask = (id: string) => api.post(`${rd}/tasks/${id}/remind`).then((r) => r.data.data);
+export const cancelRdTask = (id: string) => api.delete(`${rd}/tasks/${id}`).then((r) => r.data.data);
+
+// Teams
+export const sendTestTeamsCard = (eventId: string) =>
+  api.post(`${nr}/teams/test`, { eventId }).then((r) => r.data.data);
+export const getTeamsStatus = () => api.get(`${nr}/teams/status`).then((r) => r.data.data);
+
 export default api;

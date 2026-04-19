@@ -40,6 +40,10 @@ const envSchema = z.object({
   GMAIL_USER: z.string().optional(),
   GMAIL_APP_PASSWORD: z.string().optional(),
 
+  // Teams Notification
+  TEAMS_NOTIFICATION_ENABLED: z.string().default("false").transform((v) => v === "true" || v === "1"),
+  TEAMS_WEBHOOK_URL: z.string().optional(),
+
   // Local uploads
   LOCAL_UPLOAD_DIR: z.string().default("./uploads"),
 

@@ -49,6 +49,7 @@ model PcnEventMaster {
   aiAnalysis         AiAnalysisResult?
   ceAssessments      CeAssessment[]
   notificationQueue  NotificationQueueEntry[]
+  rdVerificationTasks RdVerificationTask[]
 
   @@map("pcn_event_master")
 }
@@ -111,9 +112,10 @@ model CeAssessment {
   needRdVerification Boolean    @default(false) @map("need_rd_verification")
   assessedAt         DateTime   @default(now()) @map("assessed_at")
 
-  pcnEvent         PcnEventMaster  @relation(fields: [pcnEventId], references: [id])
-  whereUsedResults WhereUsedResult[]
-  cases            PcnCaseMaster[]
+  pcnEvent             PcnEventMaster    @relation(fields: [pcnEventId], references: [id])
+  whereUsedResults     WhereUsedResult[]
+  cases                PcnCaseMaster[]
+  rdVerificationTasks  RdVerificationTask[]
 
   @@map("ce_assessment")
 }
@@ -238,6 +240,47 @@ model WhereUsedCache {
 
   @@index([itemNumber])
   @@map("where_used_cache")
+}
+
+// ===== RD 驗證任務 =====
+// Phase II: CE 提出 RD 驗證需求，自動指派 RD 工程師，透過 Teams 通知
+model RdVerificationTask {
+  id               String       @id @default(uuid())
+  ceAssessmentId   String       @map("ce_assessment_id")
+  pcnEventId       String       @map("pcn_event_id")
+
+  // Assignment
+  assignedRdName   String       @map("assigned_rd_name")
+  assignedRdEmail  String       @map("assigned_rd_email")
+  assignedBy       String       @map("assigned_by")
+  autoAssigned     Boolean      @default(false) @map("auto_assigned")
+
+  // Task details
+  taskStatus       RdTaskStatus @default(PENDING) @map("task_status")
+  priority         String       @default("NORMAL")
+  dueDate          DateTime?    @map("due_date")
+
+  // RD Response
+  rdDecision       String?      @map("rd_decision")      // PASS / FAIL / CONDITIONAL
+  rdComments       String?      @map("rd_comments")
+  rdReportPath     String?      @map("rd_report_path")
+  respondedAt      DateTime?    @map("responded_at")
+
+  // Timestamps
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+
+  ceAssessment CeAssessment   @relation(fields: [ceAssessmentId], references: [id])
+  pcnEvent     PcnEventMaster @relation(fields: [pcnEventId], references: [id])
+
+  @@map("rd_verification_task")
+}
+
+enum RdTaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
 }
 
 // ===== 客戶主檔 =====

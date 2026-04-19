@@ -8,6 +8,7 @@ import { MpnCacheService } from "../where-used/mpn-cache.service.js";
 import { WhereUsedCacheService } from "../where-used/whereused-cache.service.js";
 import { DenodoPartsInfoService } from "../where-used/denodo-parts.service.js";
 import { DenodoExportService } from "../where-used/denodo-export.service.js";
+import { getTeamsTransport } from "../notification/teams-transport.service.js";
 import { logger } from "../../config/logger.js";
 import fs from "fs";
 
@@ -331,6 +332,29 @@ export class NotificationRulesController {
       platformUrl: `http://localhost:5173/pcn/${event.id}`,
     };
   }
+
+  // --- Teams ---
+  /** Send test Teams card for a PCN event */
+  sendTestTeamsCard = async (req: FastifyRequest, reply: FastifyReply) => {
+    const { eventId } = req.body as { eventId: string };
+    if (!eventId) {
+      return reply.status(400).send({ success: false, error: { message: "eventId required" } });
+    }
+    const emailData = await this.buildEmailDataFromEvent(eventId);
+    if (!emailData) {
+      return reply.status(404).send({ success: false, error: { message: "PCN event or AI analysis not found" } });
+    }
+    const teams = getTeamsTransport();
+    const card = teams.buildPcnNotificationCard(emailData);
+    const result = await teams.sendCard(card);
+    return reply.send({ success: true, data: result });
+  };
+
+  /** Get Teams transport status */
+  teamsStatus = async (_req: FastifyRequest, reply: FastifyReply) => {
+    const teams = getTeamsTransport();
+    return reply.send({ success: true, data: teams.getStatus() });
+  };
 
   /** Build Excel attachment with affected parts + where-used sheets */
   private async buildExcelAttachment(eventId: string, emailData: PcnEmailData) {

@@ -49,8 +49,12 @@ export async function notificationRulesRoutes(app: FastifyInstance) {
   app.post("/seed", c.seedRules);
 
   // Email preview & sending
-  app.get("/email/preview/:eventId", c.previewEmail);          // Returns rendered HTML
-  app.get("/email/preview-json/:eventId", c.previewEmailJson); // Returns JSON data
-  app.post("/email/send-test", c.sendTestEmail);               // Send test email
-  app.get("/email/status", c.emailStatus);                     // Transport status
+  app.get("/email/preview/:eventId", c.previewEmail);
+  app.get("/email/preview-json/:eventId", c.previewEmailJson);
+  app.post("/email/send-test", c.sendTestEmail);
+  app.get("/email/status", c.emailStatus);
+
+  // Teams notification
+  app.post("/teams/test", c.sendTestTeamsCard);
+  app.get("/teams/status", c.teamsStatus);
 }
