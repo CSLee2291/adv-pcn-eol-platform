@@ -45,20 +45,37 @@ jobs:
           # Copy built app + prisma schema
           cp -r dist deploy/
           cp -r prisma deploy/
-          cp package.json deploy/
 
-          # Install only production deps in deploy folder
+          # Create a clean package.json without workspace: protocol
+          node -e "
+            const pkg = require('./package.json');
+            // Remove workspace deps (shared package is copied directly)
+            for (const [k,v] of Object.entries(pkg.dependencies || {})) {
+              if (String(v).startsWith('workspace:')) delete pkg.dependencies[k];
+            }
+            pkg.scripts = { start: 'node dist/app.js' };
+            require('fs').writeFileSync('deploy/package.json', JSON.stringify(pkg, null, 2));
+          "
+
+          # Install production deps
           cd deploy
           npm install --omit=dev --ignore-scripts 2>&1 | tail -5
 
-          # Also need shared packages
+          # Copy shared packages (replaces workspace: dep)
           mkdir -p packages/shared
           cp -r $GITHUB_WORKSPACE/packages/shared/* packages/shared/
 
-          # Need @prisma/client from the generated output
-          mkdir -p node_modules/.prisma
-          cp -r $GITHUB_WORKSPACE/node_modules/.prisma/client node_modules/.prisma/client
-          cp -r $GITHUB_WORKSPACE/node_modules/@prisma node_modules/@prisma 2>/dev/null || true
+          # Copy Prisma client from pnpm store
+          PRISMA_CLIENT=$(find $GITHUB_WORKSPACE/node_modules -path "*/.prisma/client" -type d 2>/dev/null | head -1)
+          PRISMA_PKG=$(find $GITHUB_WORKSPACE/node_modules -path "*/@prisma/client" -type d 2>/dev/null | head -1)
+          if [ -n "$PRISMA_CLIENT" ]; then
+            mkdir -p node_modules/.prisma
+            cp -r "$PRISMA_CLIENT" node_modules/.prisma/client
+          fi
+          if [ -n "$PRISMA_PKG" ]; then
+            mkdir -p node_modules/@prisma
+            cp -r "$PRISMA_PKG" node_modules/@prisma/client
+          fi
 
           echo "Deploy size: $(du -sh . | cut -f1)"
           zip -r -q ../deploy.zip .
