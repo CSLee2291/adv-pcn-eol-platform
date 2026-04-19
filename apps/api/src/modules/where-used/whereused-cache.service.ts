@@ -88,8 +88,17 @@ export class WhereUsedCacheService {
       denodoRecords = result.where_used;
       fromDenodo = uncachedItems.length;
 
-      // Step 3: Save to cache (per item)
-      await this.saveToCache(uncachedItems, result.where_used);
+      // Step 3: Save to cache (per item) — skip items that failed (Denodo unreachable)
+      const successItems = uncachedItems.filter((item) => !this.denodoService.failedItems.has(item));
+      if (successItems.length > 0) {
+        await this.saveToCache(successItems, result.where_used);
+      }
+      if (this.denodoService.failedItems.size > 0) {
+        logger.warn(
+          { failed: [...this.denodoService.failedItems] },
+          "Skipped caching failed items (Denodo unreachable)",
+        );
+      }
     } else if (onProgress) {
       // All from cache — send immediate complete
       onProgress({ step: "query", current: itemNumbers.length, total: itemNumbers.length, cached: fromCache, queried: 0 });
@@ -142,7 +151,11 @@ export class WhereUsedCacheService {
 
     const result = await this.denodoService.getWhereUsed(itemNumbers, onProgress);
 
-    await this.saveToCache(itemNumbers, result.where_used);
+    // Only cache items that succeeded
+    const successItems = itemNumbers.filter((item) => !this.denodoService.failedItems.has(item));
+    if (successItems.length > 0) {
+      await this.saveToCache(successItems, result.where_used);
+    }
 
     onProgress?.({
       step: "complete",

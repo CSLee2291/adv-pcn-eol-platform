@@ -33,11 +33,15 @@ export interface ProgressEvent {
 export class DenodoWhereUsedService {
   private client = getDenodoClient();
 
+  /** Items that failed during getWhereUsed — should NOT be cached */
+  failedItems: Set<string> = new Set();
+
   async getWhereUsed(
     itemNumbers: string[],
     onProgress?: ProgressCallback,
   ): Promise<WhereUsedQueryResult> {
     const allRecords: DenodoWhereUsedRecord[] = [];
+    this.failedItems = new Set();
 
     for (let i = 0; i < itemNumbers.length; i++) {
       const itemNum = itemNumbers[i];
@@ -62,6 +66,7 @@ export class DenodoWhereUsedService {
         logger.debug({ itemNum, raw: records.length, filtered: filtered.length }, "Where-used query completed");
       } catch (err: any) {
         logger.error({ itemNum, error: err.message }, "Where-used query failed");
+        this.failedItems.add(itemNum);
       }
     }
 
