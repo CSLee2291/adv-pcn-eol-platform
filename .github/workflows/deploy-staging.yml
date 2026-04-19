@@ -81,11 +81,24 @@ jobs:
           zip -r -q ../deploy.zip .
 
       - name: Deploy to Azure App Service
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: pcn-eol-api-staging
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: apps/api/deploy.zip
+        env:
+          DEPLOY_USER: ${{ secrets.AZURE_DEPLOY_USER }}
+          DEPLOY_PASS: ${{ secrets.AZURE_DEPLOY_PASS }}
+        run: |
+          echo "Deploying $(du -sh apps/api/deploy.zip | cut -f1) package..."
+          HTTP_CODE=$(curl -s -o /tmp/deploy_out.txt -w "%{http_code}" \
+            -X POST \
+            -u "${DEPLOY_USER}:${DEPLOY_PASS}" \
+            --data-binary @apps/api/deploy.zip \
+            -H "Content-Type: application/zip" \
+            "https://pcn-eol-api-staging.scm.azurewebsites.net/api/zipdeploy")
+          echo "HTTP Status: $HTTP_CODE"
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            cat /tmp/deploy_out.txt
+            echo "Deployment failed!"
+            exit 1
+          fi
+          echo "Deployment successful!"
 
   deploy-web:
     name: Deploy Frontend to Azure Static Web Apps
